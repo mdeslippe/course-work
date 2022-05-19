@@ -17,7 +17,6 @@
 \usepackage{hyperref}
 \usetikzlibrary{arrows}
 
-
 \usetikzlibrary{shapes.geometric, arrows}
 \tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
 \tikzstyle{decision} = [diamond, minimum width=4cm, minimum height=0.5cm, text centered, draw=black, fill=green!30]
@@ -73,11 +72,15 @@
 
     \subsection*{Hardware Controllers}
     \begin{itemize}
-        \item The \textbf{physical hardware components} of a computer system are managed by a \textbf{controller} which acts as an \textbf{intermediary} between the device and the rest of the system. Device controllers work by handling raw signals coming from the CPU and directing the hardware accordingly.
+        \item The \textbf{physical hardware components} of a computer system are managed by a \textbf{controller} which acts as an \textbf{intermediary} between the device and the rest of the system. 
+        \item \textbf{Device controllers} work by \textbf{handling raw signals coming from the CPU and directing the hardware accordingly}.
+        \item \textbf{Controllers} contain a \textbf{buffer} that is responsible for \textbf{communicating data between the devices they control, and the rest of the system}.
         \item The \textbf{controllers} are connected to the \textbf{system bus}, which gives the controllers access to \textbf{shared memory} that can be used to communicate with other components.
-        \item \textbf{Drivers} are a special type of software that \textbf{manage devices}.
+        \item \textbf{Drivers} are a special type of software that \textbf{manage device controllers}.
         \item To sum it up, \textbf{controllers} handle signals from the CPU and access shared memory. Whereas \textbf{drivers} are responsible for managing the device.
     \end{itemize}
+
+\section*{\centering{System Events}}
 
     \subsection*{System Events}
     \begin{itemize}
@@ -95,6 +98,69 @@
             recover from}.
             \item \textbf{Aborts} are \textbf{exceptions} that the program \textbf{cannot, or are very difficult to recover from}.
         \end{enumerate}
+    \end{itemize}
+
+    \subsection*{Hardware Interrupts}
+    \begin{itemize}
+        \item A \textbf{hardware interrupt} is an \textbf{electronic alerting signal} that is \textbf{sent to the process} from an \textbf{external device}.
+        \item If the \textbf{interrupt is permitted} by the \textbf{processor}, the \textbf{processor will stop executing it's current instructions, save it's state, and execute a function} known as an \textbf{interrupt handler}.
+        \item \textbf{Interruptions} are often \textbf{temporary} and the \textbf{process can resume what it was doing before the interrupt}.
+        \item The process of \textbf{the processer storing it's state} so that it can be \textbf{resumed later} is known as \textbf{context switching}.
+        \item To handle \textbf{interruptions} from \textbf{several devices} an \textbf{interrupt controller is used}.
+        \item \textbf{Interrupt controllers} provides a \textbf{programmable governing policy} that allows \textbf{software to determine which devices can interrupt the process at any specific time}.
+        \item \textbf{Interrupt controllers} also allow \textbf{device controllers} to define a \textbf{device specific interrupt handler routines}.
+        \item Different \textbf{interrupt signals} are given different \textbf{priorities} to avoid conflicts with \textbf{simultaneous interrupt signals}.
+        \item The order \textbf{simultaneous interrupt signals} are sent to the processor is \textbf{controlled by the interrupt controller}.
+        \item The \textbf{processor} users an \textbf{interrupt descriptor table (IDT)} to reference the \textbf{interrupt handler} that corresponds with each \textbf{interrupt signal}.
+        \item The \textbf{IDT} has 256 entries in the table.
+        \item In \textbf{multi-processor systems} an \textbf{Advanced Programmable Interrupts Controller (APIC)} is used to communicate \textbf{interrupt signals between processors}.
+    \end{itemize}
+
+    \subsection*{Types of Interrupts}
+    \begin{itemize}
+        \item There are two types of hardware interrupts:
+        \begin{enumerate}
+            \item \textbf{Non-Maskable Interrupts} - Non-Maskable Interrupts are \textbf{interrupts} that \textbf{cannot be ignored}. They are generally reserved for \textbf{unrecoverable errors}.
+            \item \textbf{Maskable Interrupts} - Maskable Interrupts are \textbf{interrupts} that \textbf{can be ignored, or delayed by the processor}. They are generally used for \textbf{device controller requests}.
+        \end{enumerate}
+    \end{itemize}
+
+\section*{\centering{System Memory}}
+
+    \subsection*{Computer Memory}
+    \begin{itemize}
+        \item In computing \textbf{memory is a device} that is used to store information.
+        \item There are \textbf{different types of memory} that are used for \textbf{different purposes}.
+        \item The following are common types of memory in computers:
+        \begin{enumerate}
+            \item A \textbf{register} is a \textbf{small amount of volatile high-speed memory} contained directly \textbf{inside the processor}. \textbf{Registers} are used to store data \textbf{needed during processing}.
+            \item \textbf{Cache} is a \textbf{volatile temporary memory} location inside \textbf{hardware} that makes \textbf{retrieving data from the computer's memory more efficient}. It stores recently accesses data.
+            \item \textbf{Main Memory (Primary Memory)} is a \textbf{volatile large and fast memory} which his used to \textbf{store programs and data during runtime}. The \textbf{processor has direct access to the main memory}.
+            \item \textbf{Secondary Memory} is a \textbf{non-volatile, long-term storage}. It is used to keep \textbf{data and programs indefinitely}.
+            \item \textbf{Electrically Erasable Programmable Read-Only Memory (EEPROM)} is a special type of \textbf{non-volatile read-only memory}, \textit{usually stored on the system's motherboard}, that is responsible for \textbf{storing the systems BIOS}.
+        \end{enumerate}
+        \item With computer memory, there is a \textbf{trade off} between \textbf{storage capacity} and \textbf{access time}. In the list above, as you go from 1 to 5, \textbf{capacity increases}, but \textbf{access time decreases}.
+    \end{itemize}
+
+    \subsection*{Programmed Input / Output}
+    \begin{itemize}
+        \item \textbf{Programmed Input / Output} is a way of \textbf{moving data} between \textbf{devices}, where \textbf{all of the data passes through the processor}.
+        \item This type of IO is \textbf{inefficient} because it takes a \textbf{large amount of time} for the processor to \textbf{perform IO}, when it could be doing other operations.
+        \item A more \textbf{modern} way to perform IO is with \textbf{direct memory access}.
+    \end{itemize}
+
+    \subsection*{Interrupt-Initiated Input / Output}
+    \begin{itemize}
+        \item \textbf{Interrupt-Initiated Input / Output} is a \textbf{more efficient} way than \textbf{Programmed I/O} to perform IO.
+        \item \textbf{Interrupt-Initiated Input / Output} works by \textbf{interrupting the processor}, when the data is \textbf{ready to be transferred}, instead of \textbf{blocking the processor while it prepares the data to be transferred}.
+        \item \textbf{All of the data still has to go through the processor}, but it \textbf{blocks the processor for less time}.
+    \end{itemize}
+
+    \subsection*{Direct Memory Access (DMA)}
+    \begin{itemize}
+        \item \textbf{Direct Memory Access} is a capability provided by the \textbf{computer bus}, it allows for \textbf{data} to be sent directly from an \textbf{attached device} to the memory on the \textbf{computer's motherboard}.
+        \item Typically a \textbf{specified portion of memory} is \textbf{designated} as an area to be used for \textbf{direct memory access}.
+        \item \textbf{DMA does not required the processor to transfer data}.
     \end{itemize}
 
 \end{document}
