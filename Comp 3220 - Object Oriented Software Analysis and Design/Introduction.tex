@@ -1,0 +1,126 @@
+\documentclass[16pt]{article}
+\usepackage[english]{babel}
+\usepackage{longtable}
+\usepackage[top=1in, bottom=1.25in, left=1.25in, right=1.25in,includefoot,heightrounded]{geometry}
+\usepackage{indentfirst}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx,tikz}
+\usepackage{hyperref}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[document]{ragged2e}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{flowchart}
+\usepackage{hyperref}
+\usetikzlibrary{arrows}
+
+
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{decision} = [diamond, minimum width=4cm, minimum height=0.5cm, text centered, draw=black, fill=green!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2cm, text width=4cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Myles Deslippe}
+\rhead{Comp 3220 | Object Oriented Software Analysis and Design}
+\cfoot{\thepage}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\baselinestretch}{1.2}
+\renewcommand{\labelitemi}{$\circ$}
+
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+\lstset{inputencoding=ansinew}
+\lstset{breaklines=true} 
+\begin{document}
+
+\section*{\centering{Introduction}}
+
+    \subsection*{Object Orientation}
+    \begin{itemize}
+        \item \textbf{Object Orientation (OO)} is a \textbf{paradigm} that views and models \textbf{a system} as \textbf{a collection of interacting objects}.
+        \item \textbf{Abstraction} is a model to \textbf{include the most important aspects} while \textbf{ignoring less important details}.
+        \item \textbf{Encapsulation} is a mechanism for \textbf{restricting access} to some \textbf{internal components} of an \textbf{object}.
+        \item \textbf{Polymorphism} is the ability of \textbf{different objects to respond to the same request in different ways}.
+    \end{itemize}
+
+    \subsection*{Objects}
+    \begin{itemize}
+        \item An \textbf{object} corresponds to \textbf{a single entity} in the \textbf{real world}.
+        \item \textbf{Objects} may be \textbf{tangible or intangible}.
+        \item All \textbf{objects} contain \textbf{information} and \textbf{exhibit behavior}.
+    \end{itemize}
+
+    \subsection*{Classes}
+    \begin{itemize}
+        \item A \textbf{class} is a \textbf{uniquely identified abstraction} of a set of \textbf{related instances} that share \textbf{identical or similar characteristics}.
+        \item An \textbf{attribute} is a \textbf{named property} of a \textbf{class}.
+        \item An \textbf{operation} is the \textbf{implementation} of a \textbf{service}.
+        \item A \textbf{class} is an \textbf{object-blueprint} and becomes an \textbf{object} when \textbf{instantiated}.
+    \end{itemize}
+    
+    \subsection*{Object Oriented Software Development}
+    \begin{itemize}
+        \item A \textbf{software process} is a \textbf{set of activities} that lead to the \textbf{production} of \textbf{software}.
+        \item A \textbf{software process model or paradigm} is an \textbf{abstraction} of \textbf{software processes}.
+        \item Common software paradigms include:
+        \begin{enumerate}
+            \item \textbf{Waterfall} - A \textbf{linear process} with \textbf{distinct phases}.
+            \item \textbf{Spiral} - \textbf{Iterative risk management}.
+            \item \textbf{Agile} - An \textbf{iterative} and \textbf{incremental} methodology.
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{OOA, OOD, OOP, and OOT}
+    \begin{itemize}
+        \item \textbf{Object-Oriented Analysis (OOA)} is the process of \textbf{analyzing a problem} and \textbf{discovering all entities} associated with the problem.
+        \item \textbf{Object-Oriented Design (OOD)} is the process of \textbf{taking the entities discovered in OOA} and \textbf{determining how they interact}.
+        \item \textbf{Object-Oriented Programming (OOP)} is the process of \textbf{implementing an object-oriented design} in a \textbf{programming language}.
+        \item \textbf{Object-Oriented Testing (OOT)} is the process of \textbf{testing the implemented design}.
+    \end{itemize}
+
+    \subsection*{The Unified Process}
+    \begin{itemize}
+        \item The \textbf{Unified Process} is an \textbf{iterative and incremental software development process framework}.
+        \item The \textbf{main principals} of the \textbf{Unified Process}:
+        \begin{enumerate}
+            \item It is \textbf{use-case driven}. A \textbf{use case} is a \textbf{written description} of \textbf{interactions} between \textbf{a role} and \textbf{a system} to \textbf{achieve a goal}. It links the \textbf{requirements} to the \textbf{implementation}.
+            \item It is \textbf{architecture-centric}. It is a \textbf{theme} from the \textbf{earliest stages} of a \textbf{project}.
+            \item It relies on \textbf{workflow in iterations}. 
+            \item It creates \textbf{incremental development}. Each \textbf{iteration} has \textbf{four properties}: the \textbf{duration}, the \textbf{tasks}, the \textbf{outcomes}, and the \textbf{usage}.
+        \end{enumerate}
+        \item The \textbf{main benefit} to \textbf{iterative development} is the ability to get \textbf{feedback, on a regular basis}.
+    \end{itemize}
+
+    \subsection*{Project Inception}
+    \begin{itemize}
+        \item The \textbf{first stage} in a project is the \textbf{inception stage}.
+        \item The \textbf{inception stage} is a short stage that addresses the following questions:
+        \begin{enumerate}
+            \item What are the outcomes?
+            \begin{itemize}
+                \item[a.] What is the vision and business case for the project?
+                \item[b.] Is it feasible to work on this project? 
+                \item[c.] Should the project be purchased or built?
+                \item[d.] What is the rough cost range of developing the project?  
+                \item[e.] Should the project continue, or stop? 
+            \end{itemize}
+            \item What are the methods for achieving the outcome?
+            \begin{itemize}
+                \item[a.] What are the requirements and how will they be achieved?
+            \end{itemize}
+            \item What are the objectives?
+            \begin{itemize}
+                \item[a.] What are the most important objectives?
+                \item[b.] What is the initial plan?
+            \end{itemize}
+        \end{enumerate}
+    \end{itemize}
+
+\end{document}
