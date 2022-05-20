@@ -79,6 +79,7 @@
     \end{itemize}
 
 \section*{\centering{The Internet}}
+
     \subsection*{The Internet}
     \begin{itemize}
         \item \textbf{The Internet} is a \textbf{global computer network} that provides a variety of \textbf{information and communication facilities}.
@@ -119,5 +120,90 @@
        \item The \textbf{ISP tiers} can have \textbf{peer-to-peer links} where they are \textbf{directly connected}, or they can have an \textbf{internet exchange point} which is an external network where \textbf{several networks can exchange data}.
        \item \textbf{Context network providers} (Google, Microsoft, etc) may also run \textbf{their own networks} that are connected to the \textbf{internet}.
    \end{itemize}
+
+   \subsection*{Packet Delay}
+   \begin{itemize}
+       \item \textbf{Packet delay} refers to the \textbf{amount of time} it takes for a packet to \textbf{reach it's destination}.
+       \item There are \textbf{four sources of packet delay} at a given \textbf{router}:
+       \begin{enumerate}
+           \item \textbf{Processing delay} - The amount of time it takes the \textbf{router to process the packet}.
+           \item \textbf{Queuing delay} - The amount of time the \textbf{packet is queued for}.
+           \item \textbf{Transmission delay} - The amount of time the \textbf{router takes to transmit the packet}.
+           \item \textbf{Propagation delay} - The amount of time it takes the \textbf{link to transfer the packet}.
+       \end{enumerate}
+   \end{itemize}
+
+   \subsection*{Network Throughput}
+   \begin{itemize}
+       \item \textbf{Network Throughput} refers to the \textbf{rate of successful message deliveries} over a communication channel.
+       \item \textbf{Network Throughput} is measured in \textbf{bits / time unit}.
+   \end{itemize}
+
+   \subsection*{Protocol Layers}
+   \begin{itemize}
+       \item Most \textbf{network protocols} are structured as a \textbf{series of layers}, collectively referred to as a \textbf{protocol stack}.
+       \item Each layer in a \textbf{protocol stack} is designed for a \textbf{specific purpose}.
+   \end{itemize}
+
+   \subsection*{The Internet Protocol Stack}
+   \begin{itemize}
+       \item \textbf{The internet} uses the \textbf{Transmission Control Protocol / Internet Protocol (TCP/IP) stack}.
+       \item \textbf{TCP/IP} is composed of \textbf{5 layers}:
+       \begin{enumerate}
+           \item The \textbf{Physical Layer (Layer 1)} is the layer responsible for \textbf{moving data within a link}.
+           \item The \textbf{Data-Link Layer (Layer 2)} is the layer responsible for \textbf{moving data in and out of the link}.
+           \item The \textbf{Network Layer (Layer 3)} \textbf{controls the flow and routing traffic} to ensure data is sent efficiently and accurately.
+           \item The \textbf{Transport Layer (Layer 4)} provides a \textbf{reliable data connection} over a network.
+           \item The \textbf{Application Layer (Layer 5)} is the group of applications that \textbf{let the user access the network}.
+       \end{enumerate}
+   \end{itemize}
+
+   \subsection*{TCP/IP Message Units}
+   \begin{itemize}
+       \item At \textbf{each layer} the unit of data has a different name.
+       \item At \textbf{Layer 1 (Physical)} each unit of data is called a \textbf{bit}.
+       \item At \textbf{Layer 2 (Data-Link)} each unit of data is called a \textbf{frame}.
+       \item At \textbf{Layer 3 (Network)} each unit of data is called a \textbf{packet}.
+       \item At \textbf{Layer 4 (Transport)} each unit of data is called a \textbf{segment}.
+       \item At \textbf{Layer 5 (Application)} each unit of data is called a \textbf{message}.
+   \end{itemize}
+
+   \subsection*{The Open Systems Interconnection Model (OSI Model)}
+   \begin{itemize}
+       \item The \textbf{OSI model} is a \textbf{reference model} for how \textbf{applications communicate over a network}.
+       \item The \textbf{OSI model} focuses on providing a \textbf{visual design} of how each \textbf{communication layer} is build \textbf{on top of the other}.
+       \item The \textbf{OSI model} is composed of \textbf{7 layers}:
+       \begin{enumerate}
+        \item The \textbf{Physical Layer (Layer 1)} is the layer responsible for \textbf{moving data within a link}.
+        \item The \textbf{Data-Link Layer (Layer 2)} is the layer responsible for \textbf{moving data in and out of the link}.
+        \item The \textbf{Network Layer (Layer 3)} \textbf{controls the flow and routing traffic} to ensure data is sent efficiently and accurately.
+        \item The \textbf{Transport Layer (Layer 4)} provides a \textbf{reliable data connection} over a network.
+        \item The \textbf{Session Layer (Layer 5)} \textbf{manages the conversations that occur between applications}.
+        \item The \textbf{Presentation Layer (Layer 6)} \textbf{translates or formats data} for the \textbf{application layer}. This layer also handles \textbf{encrypting and decrypting} the data the application layer requires.
+        \item The \textbf{Application Layer (Layer 7)} is the group of applications that \textbf{let the user access the network}.
+    \end{enumerate}
+   \end{itemize}
+
+\section*{\centering{Network Security}}
+
+    \subsection*{Network Security}
+    \begin{itemize}
+        \item \textbf{Network Security} is a set of technologies that \textbf{protects} the \textbf{usability, and integrity of network infrastructure}.
+        \item A \textbf{network security architecture} is composed of \textbf{tools that protect the network itself and the applications that rely on it}.
+    \end{itemize}
+
+    \subsection*{Types of Dangers on a Network}
+    \begin{itemize}
+        \item \textbf{Malware (malicious software)} refers to \textbf{software} created by people with \textbf{bad intentions} that performs \textbf{malicious actions on the device / network}.
+        \begin{itemize}
+            \item A \textbf{virus} is a \textbf{self-replicating program} that works by \textbf{executing malicious programs}.
+            \item A \textbf{worm} is a \textbf{self-replicating program} that that works by \textbf{passively receiving a program that is then executed}.
+        \end{itemize}
+        \item \textbf{Spyware} is a \textbf{type of malware} that \textbf{tracks actions performed on the computer}.
+        \item A \textbf{Denial of Service attack (DOS)} is an attack that sends \textbf{high volumes of traffic to it's target} to \textbf{overwhelm} the network.
+        \item A \textbf{Distributed Denial of Service Attack (DDOS} is a \textbf{DOS attack} that uses \textbf{several devices to attack the target}.
+        \item \textbf{Packet sniffing} is when a program \textbf{intercepts packets (stores them)} and then \textbf{forwards them as if nothing happened}.
+        \item \textbf{IP Spoofing} is when \textbf{packets are sent with a false IP source address}.
+    \end{itemize}
 
 \end{document}
