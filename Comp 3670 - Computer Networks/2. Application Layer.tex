@@ -1,7 +1,7 @@
 \documentclass[16pt]{article}
 \usepackage[english]{babel}
 \usepackage{longtable}
-\usepackage[top=1in, bottom=1.25in, left=1.25in, right=1.25in,includefoot,heightrounded]{geometry}
+\usepackage[top=1in, bottom=0.25in, left=1.25in, right=1.25in,includefoot,heightrounded]{geometry}
 \usepackage{indentfirst}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb}
@@ -32,17 +32,13 @@
 \rhead{Comp 3670 | Computer Networks}
 \cfoot{\thepage}
 
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\baselinestretch}{1.2}
-\renewcommand{\labelitemi}{$\circ$}
-
 \definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
 \lstset{inputencoding=ansinew}
 \lstset{breaklines=true} 
 
 \begin{document}
 
-\section*{\centering{Network Applications}}
+    \section*{\centering{Network Applications}}
 
     \subsection*{Principals of Network Applications}
     \begin{itemize}
@@ -63,6 +59,44 @@
     \begin{itemize}
         \item The \textbf{peer to peer architecture} has \textbf{no always-on server}.
         \item The \textbf{clients communicate directly}.
+    \end{itemize}
+
+    \subsection*{Process Communication}
+    \begin{itemize}
+        \item A \textbf{process} is a \textbf{program running on a network host}.
+        \item \textbf{Processes} in the \textbf{same host} use \textbf{inter-process communication} to communicate.
+        \item \textbf{Processes} in \textbf{different hosts} use \textbf{network-communication} to communicate.
+        \item The \textbf{server process} is a process that \textbf{waits to be contacted by clients}.
+        \item The \textbf{client process} is a process that \textbf{initiates communication with the server}.
+    \end{itemize}
+
+    \subsection*{Sockets}
+    \begin{itemize}
+        \item One way \textbf{two process} can \textbf{connect over a network} is with \textbf{sockets}.
+        \item A \textbf{socket} is a \textbf{structure within a network host} that \textbf{serves as an endpoint} for \textbf{sending and receiving data}.
+        \item In order for \textbf{network hosts to communicate}, they must each have a \textbf{unique Internet Protocol Address (IP Address)}.
+        \item The \textbf{operating system} uses the \textbf{ports} of the \textbf{server and client} to make sure the information ends up in the \textbf{correct place}.
+    \end{itemize}
+
+    \subsection*{Application Layer Protocols}
+    \begin{itemize}
+        \item \textbf{Application Layer Protocols} define how \textbf{application processes} running on \textbf{different end systems communicate}.
+        \item The \textbf{protocols} define \textbf{the message syntax, semantics, and rules}.
+        \item The \textbf{type of transport} an \textbf{application} uses depends on what is \textbf{important to the application}; such as \textbf{data integrity, throughput, timing, etc}.
+    \end{itemize}
+
+    \subsection*{Internet Transport Services}
+    \begin{itemize}
+        \item There are \textbf{two internet transport protocol services}:
+        \begin{enumerate}
+            \item \textbf{User Datagram Protocol (UDP)} is a \textbf{transport protocol} that is \textbf{fast but unreliable}. UDP has \textbf{no confirmation} that the \textbf{packets were delivered}; upd is \textbf{not connection-oriented}.
+            \item \textbf{Transport Control Protocol (TCP)} is a \textbf{transport protocol} that is \textbf{reliable, but has more overhead}. TCP has \textbf{flow control, congestion control, and is connection oriented}.
+        \end{enumerate}
+        \item \textbf{TCP and UDP} have \textbf{no encryption} by default.
+        \item To \textbf{secure data} being transferred with \textbf{TCP} we use a \textbf{Secure Socket Layer (SSL)} which provides \textbf{encryption, data integrity, and end-point authentication}.
+        \begin{itemize}
+            \item \textbf{SSL} is a part of the \textbf{application-layer}.
+        \end{itemize}
     \end{itemize}
 
 \end{document}
