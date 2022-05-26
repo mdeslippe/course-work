@@ -160,4 +160,48 @@
         \item \textbf{DMA does not required the processor to transfer data}.
     \end{itemize}
 
+    \section*{Computer System Architecture}
+    
+    \subsection*{Processors}
+    \begin{itemize}
+        \item \textbf{Computer Systems} may have \textbf{one or more processors}.
+        \item \textbf{Most systems} have a \textbf{single processor}, however \textbf{multi-processor systems} are becoming \textbf{more common}.
+        \item \textbf{Advantages} of having \textbf{multiple processors} include \textbf{increased throughput, economy, reliability, etc}.
+        \item There are \textbf{two ways} an operating system can \textbf{handle multiple processors}:
+        \begin{enumerate}
+            \item \textbf{Asymmetric Multiprocessing} is when each processor is assigned a \textbf{specific task}.
+            \item \textbf{Symmetric Multiprocessing} is when each processor performs \textbf{any tasks}.
+        \end{enumerate}
+        \item \textbf{Modern processors} have \textbf{multiple cores}, allowing them to perform \textbf{multiple operations simultaneously}.
+    \end{itemize}
+
+    \subsection*{Clustered Systems}
+    \begin{itemize}
+        \item \textbf{Clustered Systems} are similar to \textbf{multi-processor systems}. They are \textbf{several computer systems that work together}.
+        \item They are usually \textbf{connected by sharing a storage-area network}, and provide a \textbf{high-availability service which survives failures}.
+        \begin{itemize}
+            \item \textbf{Asymmetric Clustering} has \textbf{one machine} in \textbf{hot-standby mode}.
+            \item \textbf{Symmetric Clustering} has \textbf{multiple nodes running applications} and monitoring each other.
+        \end{itemize}
+    \end{itemize}
+
+    \subsection*{Time Slicing}
+    \begin{itemize}
+        \item To allow a \textbf{single processor} to execute \textbf{several processes "at the same time"} we use \textbf{time slicing}.
+        \item \textbf{Time slicing} gives each process \textbf{a specific amount of time to execute it's tasks} and then moves on to the next.
+    \end{itemize}
+
+    \subsection*{Dual-Mode Operation}
+    \begin{itemize}
+        \item \textbf{Dual-Mode Operation} allows the \textbf{operating system to protect itself and other system components}.
+        \item \textbf{Dual-Mode Operation} consists of \textbf{two modes}:
+        \begin{enumerate}
+            \item \textbf{User Mode}, which allows users to perform regular computational tasks.
+            \item \textbf{Kernel Mode}, which allows to kernel to perform privileged operations.
+        \end{enumerate}
+        \item To facilitate the modes a \textbf{mode bit is provided by the hardware}, giving the ability to determine when the system is running \textbf{user code}, or \textbf{kernel code}.
+        \item When \textbf{user programs} invoke a \textbf{system call}, the \textbf{kernel mode is activated}. When the \textbf{system call returns}, the \textbf{mode is reset to user mode}. 
+        \item It is \textbf{not possible} for \textbf{user programs} to manually \textbf{change the mode bit}. It can only be performed by \textbf{the kernel}.
+    \end{itemize}
+
 \end{document}
