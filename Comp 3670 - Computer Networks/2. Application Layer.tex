@@ -99,4 +99,69 @@
         \end{itemize}
     \end{itemize}
 
+    \section*{\centering{The World Wide Web}}
+
+    \subsection*{Introduction}
+    \begin{itemize}
+        \item The \textbf{Word Wide Web or Web} is the world's dominant \textbf{software platform}.
+        \item The \textbf{web} is an information space where \textbf{documents and other resources} can be \textbf{accessed through the internet} using a \textbf{web browser}.
+        \item A \textbf{web page} is a \textbf{hypertext document} that is delivered by a \textbf{web server}.
+        \item A \textbf{website} consists of \textbf{many webpages} linked together under a common \textbf{host}.
+        \item \textbf{Web resources} can be accessed through a \textbf{Uniform Resource Locator (URL)}.
+        \item[] \includegraphics[width=407px]{images/URL.png}
+    \end{itemize}
+    
+    \subsection*{Hypertext Transfer Protocol}
+    \begin{itemize}
+        \item The \textbf{web} uses the \textbf{Hypertext Transfer Protocol (HTTP) suite} to transfer data over the \textbf{internet}.
+            \item \textbf{HTTP} uses \textbf{TCP} to facilitate the actual data transfer as follows:
+            \begin{enumerate}
+                \item The \textbf{client} initiates the \textbf{TCP} connection with the \textbf{server} (typically on port 80).
+                \item The \textbf{server} accepts the \textbf{TCP} connection from the \textbf{client}.
+                \item \textbf{HTTP messages} are exchanged between the \textbf{browser} and the \textbf{server}.
+                \item The \textbf{TCP} connection is \textbf{closed}.
+            \end{enumerate}
+        \item \textbf{HTTP} is \textbf{stateless}.
+        \item There are \textbf{two} types of \textbf{HTTP connections}:
+        \begin{enumerate}
+            \item \textbf{Persistent HTTP} is a connection where multiple files can be sent over a \textbf{single TCP connection} between the \textbf{client} and the \textbf{server}.
+            \item \textbf{Non-Persistent HTTP} is where each file requires a \textbf{separate TCP connection} between the \textbf{client} and the \textbf{server}. 
+        \end{enumerate}
+
+    \end{itemize}
+
+    \subsection*{Hypertext Transfer Protocol Requests}
+    \begin{itemize}
+        \item \textbf{HTTP requests} are the \textbf{messages} used to communicate over the \textbf{HTTP protocol}.
+        \item There are \textbf{two main parts} of the request:
+        \begin{enumerate}
+            \item \textbf{The Header} is the field of an \textbf{HTTP request or response} that passes \textbf{additional context and metadata} about the request.
+            \item \textbf{The Body} is the field of an \textbf{HTTP request or response} that passes the \textbf{target data}.
+        \end{enumerate}
+        \item There are two \textbf{8 types of HTTP request methods}:
+        \begin{enumerate}
+            \item The \textbf{GET method} is used to \textbf{retrieve information} from the server.
+            \item The \textbf{HEAD method} is used to \textbf{retrieve information} from the server, but it transfers the status line and the header only.
+            \item The \textbf{POST method} is used to \textbf{send data} to the server.
+            \item The \textbf{PUT method} is used to \textbf{replace data} on the server.
+            \item The \textbf{DELETE method} is used to \textbf{delete data} on the server.
+            \item The \textbf{CONNECT method} is used to \textbf{establish a tunnel to the server}.
+            \item The \textbf{OPTIONS method} is used to \textbf{describe the communication options} for the target resource.
+            \item The \textbf{TRACE method} is used to \textbf{perform a message loop back test}.
+        \end{enumerate}
+    \end{itemize}
+    
+    \subsection*{Maintaining State over HTTP}
+    \begin{itemize}
+        \item Since \textbf{HTTP requests have no state}, we use \textbf{cookies}.
+        \item \textbf{Cookies} are \textbf{key-value pairs} that are \textbf{sent back-and-forth with each request} (similar to headers).
+    \end{itemize}
+
+    \subsection*{Web Cache (Proxy Servers)}
+    \begin{itemize}
+        \item ISPs will use \textbf{cache proxy servers} to serve \textbf{cached data}, to lessen the load on the \textbf{origin server}.
+        \item If the data is \textbf{not found on the cache proxy server}, the request will be \textbf{forwarded to the origin server}.
+        \item \textbf{Cache servers} can reduce the response time for requests, and reduce the traffic on access links.
+    \end{itemize}
+
 \end{document}

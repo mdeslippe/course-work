@@ -90,6 +90,7 @@
     \subsection*{Monolithic and Modular Operating Systems}
     \begin{itemize}
         \item A \textbf{monolithic operating system} (tightly-coupled system) is an operating system that uses \textbf{one static-compiled image} and runs in an \textbf{all or nothing mode}.
+        \item \textbf{Monolithic operating systems} are \textbf{difficult to implement and maintain}, but have \textbf{less overhead}.
         \item A \textbf{layered operating system} is an operating system that is divided into several layers with each layer interfacing with the one below it. The first layer (Layer 0) is the hardware, and the final layer (Layer N) is the user interface.
         \item The \textbf{layered approach} has a lot of \textbf{overhead} because each user functionality has to \textbf{traverse all of the layers}.
         \item A \textbf{modular operating system} (loosely-coupled system) is an operating system that is built with various tasks \textbf{divided} into \textbf{distinct processes} each of which contain their own \textbf{interface}.
@@ -98,7 +99,6 @@
             \item \textbf{Microkernels} are generally more \textbf{secure, reliable, and maintainable}. The only downside is that \textbf{modular communication has more overhead}.
         \end{itemize}
         \item \textbf{Modular operating systems} use \textbf{Loadable Kernel Modules (LKM)} which gives the operating system the ability to \textbf{add or remove modules at runtime} without the need to recompile the kernel or restart the system.
-        \item \textbf{Monolithic operating systems} are \textbf{difficult to implement and maintain}, but have \textbf{less overhead}.
         \item You can also have a \textbf{hybrid operating system} which is partially \textbf{monolithic} and \textbf{modular}.
     \end{itemize}
 
