@@ -92,7 +92,7 @@
 
     \section*{\centering{Use Case Descriptions}}
 
-    \subsection*{Use Case Modeling}
+    \subsection*{Use Cases}
     \begin{itemize}
         \item A \textbf{use case} is primarily an \textbf{action of writing text}.
         \item An \textbf{actor} is a \textbf{person or thing} that \textbf{interacts} with the software.
@@ -120,6 +120,102 @@
             \item \textbf{Exceptions (detailed)}. Exceptions that may occur.
             \item \textbf{Special requirements} - Non-functional requirements for the use case.
             \item \textbf{Open issues} - Anything that hs an effect on the functionality of the use case.
+        \end{enumerate}
+    \end{itemize}
+
+    \section*{\centering{Use Case Diagrams}}
+
+    \subsection*{Models}
+    \begin{itemize}
+        \item A \textbf{model} is a \textbf{representation of an entity}.
+        \item \textbf{Models} can be used in simulations, evolve as we learn, and are quicker to build than the real thing.
+        \item A \textbf{useful model} has the \textbf{right level of detail} and represents only what is \textbf{important} for the task.
+    \end{itemize}
+
+    \subsection*{Diagrams}
+    \begin{itemize}
+        \item A \textbf{diagram} is a \textbf{simplified drawing} showing the \textbf{appearance, structure, or workings} of something.
+        \item There are \textbf{rules / standards} for drawing \textbf{diagrams}.
+    \end{itemize}
+
+    \subsection*{Unified Modeling Language Diagrams}
+    \begin{itemize}
+        \item The \textbf{Unified Modeling Language (UML)} is a general-purpose \textbf{developmental modeling language} that is intended to provide a standard way to \textbf{visualize a system}.
+        \item To model systems based on the \textbf{UML}, we use \textbf{UML diagrams}.
+        \item \textbf{UML diagrams} consist of \textbf{icons, 2D symbols, paths, and strings}.
+        \item It is more important to \textbf{fully and correctly communicate ideas} than it is to completely adhere to UML notation standards. 
+    \end{itemize}
+
+    \subsection*{UML Use Case Diagrams}
+    \begin{itemize}
+        \item A \textbf{use case diagram} shows the \textbf{names of actors and use cases} along with \textbf{their relationships}.
+        \item There are \textbf{four elements} in use case diagrams: \textbf{actors, use cases, subsystem boundaries, and relationships}.
+        \item A \textbf{top-level diagram} includes \textbf{top-level use cases} that \textbf{interact directly} with one or more \textbf{actors}.
+        \item A \textbf{sub-level diagram} includes a few of the \textbf{top-level} use cases and \textbf{other related use cases}.
+        \item \textbf{Actors} in a use case diagram are \textbf{external entities} who \textbf{use the system}.
+        \begin{itemize}
+            \item \textbf{Primary actors} achieve their goals by using the system.
+            \item \textbf{Supporting actors} provide services to the system.
+        \end{itemize}        
+        \item To \textbf{identify actors} you need to look at \textbf{who will be using the system, and what will they be doing with it}.
+    \end{itemize}
+
+    \subsection*{Name and Size of Use Cases}
+    \begin{itemize}
+        \item A use case describes \textbf{what happens} in the \textbf{system} when it is \textbf{used by an actor}.
+        \item The \textbf{name} of a \textbf{use case} is typically a \textbf{verb and a noun}.
+        \item The \textbf{size of use cases} should be \textbf{adequate} (not too big or too small).
+        \item \textbf{Use cases} focus on \textbf{what, not how}.
+    \end{itemize}
+
+    \subsection*{System Boundary}
+    \begin{itemize}
+        \item A \textbf{use case model} usually consists of \textbf{multiple diagrams}.
+        \item The \textbf{boundary separates top-level use cases from actors}. It does not include use cases for external behaviors.
+    \end{itemize}
+
+    \subsection*{Entity Relationships}
+    \begin{itemize}
+        \item To connect entities we use relationships.
+        \item The \textbf{include relationship} indicates that \textbf{an entity always uses one or more instances of another entity}.
+        \item The \textbf{extend relationship} indicates that \textbf{one use case flows directly from another}.
+        \item To draw the \textbf{include and extend relationships in a UML diagram} you use a \textbf{dotted line with arrows pointing towards the entity being included or extended}. The arrow should say "include" or "extend". 
+    \end{itemize}
+
+    \subsection*{Creating Use Case Diagrams}
+    \begin{itemize}
+        \item To create a \textbf{use case diagram}, you do the following:
+        \begin{enumerate}
+            \item \textbf{Identify actors and uses cases} by reviewing the \textbf{vision document} and the \textbf{list of requirements}.
+            \item \textbf{Add elements to high/low level diagrams} by showing the \textbf{system boundaries} as boxes, \textbf{placing primary actors outside of the boxes} and \textbf{primary use cases inside the boxes}. 
+            \item \textbf{Refine the diagram} by \textbf{adding use case and actor relationships}, \textbf{adjusting the placement of elements}, and \textbf{linking the use cases with important scenarios}.
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{Activity Diagrams}
+    \begin{itemize}
+        \item An \textbf{activity diagram} can be used to \textbf{model tasks, describe use-case functionality, describe the logic of an operation, and model the activities that make up the life cycle in the unified process}.
+        \item Before drawing you should ask yourself:
+        \begin{enumerate}
+            \item What is the purpose of the diagram?
+            \item What is the name of the use case?
+            \item What level of detail is required?
+        \end{enumerate}
+        \item To create an \textbf{activity diagram} you do the following:
+        \begin{enumerate}
+            \item Identify actions and their order of flow.
+            \item Work on the main flow of actions by
+            \begin{itemize}
+                \item Creating a start node.
+                \item Placing main actions in the order of flow.
+                \item Adding a final node at the flow end.
+                \item Linking actions with necessary decisions.
+                \item Identifying and creating alternative flows.
+                \item Introduction fork/joint nodes.
+                \item Continuing with other use cases (optional).
+            \end{itemize}
+            \item Refine the diagram by adding objects and object flows, as well as control flows with IO pins.
+            \item To view the \textbf{diagram notation} visit https://www.geeksforgeeks.org/unified-modeling-language-uml-activity-diagrams/.
         \end{enumerate}
     \end{itemize}
 
