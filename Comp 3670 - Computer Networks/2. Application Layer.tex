@@ -130,6 +130,30 @@
 
     \end{itemize}
 
+    \subsection*{Hypertext Transfer Protocol Versions}
+    \begin{itemize}
+        \item \textbf{HTTP 1.0} key features:
+        \begin{enumerate}
+            \item The concept of headers and request methods were introduced.
+            \item Version information is include in requests.
+            \item It allowed for a single request / response for every TCP connection.
+            \item Status codes were introduced.
+            \item The content-type header made it possible to send different file types.
+        \end{enumerate}
+        \item \textbf{HTTP 1.1} key features:
+        \begin{enumerate}
+            \item Allows for multiple requests with a single TCP connection via the keep-alive header.
+            \item The upgrade header was introduced to allow the server and the client to switch communication protocols.
+            \item Support for chunk transfers was introduced allowing for streaming content dynamically.
+        \end{enumerate}
+        \item \textbf{HTTP 2.0} key features:
+        \begin{enumerate}
+            \item The protocol has switched to a binary protocol (no more plain text requests).
+            \item Introduced push servers, allowing the server to push common resources before the client requests them.
+            \item Introduced multiplexing interleaving the requests and responses without head-of-line blocking over a single TCP connection.
+        \end{enumerate}
+    \end{itemize}
+
     \subsection*{Hypertext Transfer Protocol Requests}
     \begin{itemize}
         \item \textbf{HTTP requests} are the \textbf{messages} used to communicate over the \textbf{HTTP protocol}.
@@ -162,6 +186,78 @@
         \item ISPs will use \textbf{cache proxy servers} to serve \textbf{cached data}, to lessen the load on the \textbf{origin server}.
         \item If the data is \textbf{not found on the cache proxy server}, the request will be \textbf{forwarded to the origin server}.
         \item \textbf{Cache servers} can reduce the response time for requests, and reduce the traffic on access links.
+        \item A \textbf{conditional GET} request is a request that uses the \textbf{cached resource} if it is \textbf{up-to-date}. This uses the \textbf{If-modified-since} header.
+    \end{itemize}
+
+    \section*{\centering{Electronic Main}}
+
+    \subsection*{E-Mail Components}
+    \begin{itemize}
+        \item There are \textbf{three components} to e-mail:
+        \begin{enumerate}
+            \item \textbf{User Agents} - Software that \textbf{acts on behalf of a user} (composing, editing, sending, and displaying email messages).
+            \item \textbf{Mail Servers} - Software that \textbf{transfers electronic mail}.
+            \item \textbf{Simple Mail Transfer Protocol (SMTP)} - An \textbf{internet standard} for communicating \textbf{electronic mail}.
+        \end{enumerate}
+        \item A \textbf{mailbox} is a container that \textbf{store incoming messages} for the user.
+        \item The \textbf{message queue} is a queue of \textbf{outgoing messages}.
+        \item \textbf{SMTP} facilitates the \textbf{transfer of messages}.
+    \end{itemize}
+
+    \subsection*{Simple Mail Transfer Protocol (SMTP)}
+    \begin{itemize}
+        \item \textbf{Simple Mail Transfer Protocol} uses the \textbf{TCP protocol} to reliably \textbf{transfer email messages} from the client to the server.
+        \item \textbf{Unencrypted mail} typically uses \textbf{port 25}.
+        \item There are \textbf{three phases of transfer}:
+        \begin{enumerate}
+            \item The handshake phase.
+            \item The message transfer phase.
+            \item The closure phase.s
+        \end{enumerate}
+        \item \textbf{Commands} use ASCII text, and \textbf{responses} use status codes and phrases.
+        \item \textbf{Messages} must be in \textbf{7-bit ASCII}.
+        \item \textbf{Messages} have a \textbf{header} and a \textbf{body}.
+    \end{itemize}
+
+    \subsection*{Mail Access Protocols}
+    \begin{itemize}
+        \item \textbf{Simple Mail Transfer Protocol (SMTP)} is a protocol that allows email clients to \textbf{deliver and store} messages on a \textbf{receiver's} server.
+        \item \textbf{Internet Mail Access Protocol (IMAP)} is a protocol that allows email clients to \textbf{retrieve, delete, and store} messages on a mail server.
+        \item \textbf{Hypertext Transfer Protocol (HTTP)} can be used to create a \textbf{web-interface} on top of \textbf{SMTP and IMAP}.
+    \end{itemize}
+
+    \section*{\centering{Domain Name System}}
+
+    \subsection*{Domain Name System}
+    \begin{itemize}
+        \item The \textbf{Domain Name System (DNS)} is a \textbf{hierarchial} and \textbf{decentralized naming system} that is used to \textbf{identify computers} that are reachable over the \textbf{internet}.
+        \item A \textbf{name server} is a single \textbf{server component} of the \textbf{domain name system}.
+        \item The \textbf{DNS} allows computers to translate \textbf{domains} (ex google.com) to \textbf{IP addresses}. 
+    \end{itemize}
+
+    \subsection*{DNS Root Name Servers}
+    \begin{itemize}
+        \item \textbf{DNS root servers} are official, contact-of-last-resort servers that \textbf{cannot resolve names}. They are managed by the \textbf{Internet Corporation for Assigned Names and Numbers (ICANN)}.
+        \item \textbf{DNS root servers} can direct requests to \textbf{Top-Level Domain (TLD) servers}.
+        \item The internet \textbf{would not work} without \textbf{root servers}.
+        \item \textbf{DNSSEC} is used to provide \textbf{DNS security} (authentication and message integrity).
+    \end{itemize}
+
+    \subsection*{Top-Level Domain Servers}
+    \begin{itemize}
+        \item \textbf{Top-Level Domain servers} are servers that are responsible for .com, .org, .net, .ca, etc.
+        \item \textbf{Authoritative DNS servers} are \textbf{DNS servers} that are owned by \textbf{organizations}, and provide \textbf{authoritative hostname to IP mappings} for organizations named hosts.
+    \end{itemize}
+
+    \subsection{Local DNS Servers}
+    \begin{itemize}
+        \item \textbf{Local DNS servers} are \textbf{DNS servers} that are owned and operated by \textbf{internet service provides, companies, and universities}.
+        \item When you make a \textbf{DNS request}, it goes to your \textbf{local DNS server}, if your \textbf{local DNS server does not have the mapping}, it will act as a proxy up the \textbf{DNS} hierarchy.
+    \end{itemize}
+
+    \subsection*{DNS Hierarchy}
+    \begin{itemize}
+        \item[] \includegraphics[width=407px]{images/DNS.png}
     \end{itemize}
 
 \end{document}
