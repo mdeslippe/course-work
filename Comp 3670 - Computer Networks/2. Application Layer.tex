@@ -249,7 +249,7 @@
         \item \textbf{Authoritative DNS servers} are \textbf{DNS servers} that are owned by \textbf{organizations}, and provide \textbf{authoritative hostname to IP mappings} for organizations named hosts.
     \end{itemize}
 
-    \subsection{Local DNS Servers}
+    \subsection*{Local DNS Servers}
     \begin{itemize}
         \item \textbf{Local DNS servers} are \textbf{DNS servers} that are owned and operated by \textbf{internet service provides, companies, and universities}.
         \item When you make a \textbf{DNS request}, it goes to your \textbf{local DNS server}, if your \textbf{local DNS server does not have the mapping}, it will act as a proxy up the \textbf{DNS} hierarchy.
@@ -258,6 +258,51 @@
     \subsection*{DNS Hierarchy}
     \begin{itemize}
         \item[] \includegraphics[width=407px]{images/DNS.png}
+    \end{itemize}
+
+    \subsection*{Types of DNS Name Resolution}
+    \begin{itemize}
+        \item There are \textbf{two types} of \textbf{DNS name resolution}:
+        \begin{enumerate}
+            \item \textbf{Iterated query} is where the \textbf{local DNS server contacts other DNS servers}, and \textbf{if the server cannot resolve the domain} the other DNS server \textbf{redirect the local DNS server}. This process continues until the \textbf{domain is resolved, or it is discovered that the domain does not exist}.
+            \item \textbf{Recursive query} is where the \textbf{local DNS server contacts one DNS server}, if the DNS server \textbf{cannot resolve the domain, it will forward the request}. This process continues until the \textbf{domain is resolved, or it is discovered that the domain does not exist}.
+        \end{enumerate}
+        \item \textbf{Iterated queries} put a \textbf{heavy-load} on \textbf{local DNS servers}.
+        \item \textbf{Recursive queries} put a \textbf{heavy-load} on \textbf{non-local DNS servers}.
+        \item With \textbf{recursive queries} each time a new \textbf{domain is resolved} it can be \textbf{cached} on \textbf{all of the servers} that \textbf{forwarded the request}, whereas with \textbf{iterative queries} it will \textbf{only be cached on the local DNS server}.
+    \end{itemize}
+
+    \subsection*{DNS Caching and Updating}
+    \begin{itemize}
+        \item One a \textbf{name server} learns a \textbf{mapping}, it \textbf{caches the mapping}.
+        \item Each \textbf{cached entry} has a \textbf{timeout period (Time To Live | TTL)}. The TTL can be defined when setting up the domain.
+        \item \textbf{Cached entries} may be \textbf{out-of-date} since they are only updated when the mapping \textbf{times out}.
+        \item The delay it takes for of the \textbf{DNS servers} to update their \textbf{DNS mapping} is known as \textbf{propagation delay}.
+    \end{itemize}
+
+    \subsection*{Types of DNS Records}
+    \begin{itemize}
+        \item \textbf{DNS records (RR records)} are stored with the following format: \textbf{(name, value, type, ttl)}.
+        \item An \textbf{A Record} is an \textbf{IPv4 address mapping record (or DNS host record)}. It stores a \textbf{hostname} and it's corresponding \textbf{IPv4 address}.
+        \item An \textbf{AAAA Record} is an \textbf{IPv6 address mapping record (or DNS host record)}. It stores a \textbf{hostname} and it's corresponding \textbf{IPv6 address}.
+        \item A \textbf{Canonical Name Record (CNAME Record)} is a record to \textbf{alias hostnames}. It stores a \textbf{from hostname} and a \textbf{to hostname}.
+        \item A \textbf{Mail Exchanger Record (MX Record)} is a record to specify a \textbf{SMTP email server} for the domain. It is used to \textbf{route outgoing} emails to an \textbf{email server}.
+        \item A \textbf{Name Server Record (NS Record)} is a record that indicates a \textbf{DNS Zone} is \textbf{delegated to an Authoritative Name Server}, and provides the \textbf{address of the name server}.
+        \item A \textbf{Reverse-Lookup Pointer Record (PTR Record)} allows a \textbf{DNS resolver} to provides an \textbf{IP address} and \textbf{receives a hostname} (Reverse DNS lookup).
+        \item A \textbf{Certificate Record (CERT Record)} is a record that stores encryption certificates (PKIX, SPKI, PGP, etc).
+        \item A \textbf{Service Location Record (SRV Record)} is a record that \textbf{specifies a service location} (similar to MX Records, but for other communication protocols).
+        \item A \textbf{Text Record (TXT Record)} is a record that \textbf{carries machine-readable data} (DKIM, DMARC, sender policy, etc).
+        \item A \textbf{State of Authority Record (SOA Record)} is a record that \textbf{appears at the beginning of a DNS zone file}. It is used to indicate the \textbf{authoritative name server} for the current \textbf{DNS zone}. Contact information for the domain administrator, and other meta-data is stored here.
+    \end{itemize}
+
+    \subsection*{DNS Protocol Messages}
+    \begin{itemize}
+        \item \textbf{DNS query and reply} messages \textbf{have the same format}:
+        \item[] \includegraphics[width=407px]{images/DNS-Message.png}
+        \begin{itemize}
+            \item \textbf{Identification} is a \textbf{16-bit integer}, the \textbf{reply will respond with the same number}.
+            \item \textbf{Flags} are: query or reply, recursion desired, recursion available, reply is authoritative.
+        \end{itemize}        
     \end{itemize}
 
 \end{document}
