@@ -1,4 +1,4 @@
-\documentclass[16pt]{article}
+\documentclass{article}
 \usepackage[english]{babel}
 \usepackage{longtable}
 \usepackage[top=1in, bottom=0.25in, left=1.25in, right=1.25in,includefoot,heightrounded]{geometry}
@@ -49,7 +49,113 @@
             \item The process stack (local variables and function calls).
             \item The process state (managed by the kernel).
         \end{enumerate}
+        \item[] \centering{\includegraphics[height=150px]{images/Process.png}} 
+        \item \raggedright Each \textbf{process' memory} is \textbf{isolated}, meaning it \textbf{cannot be accessed} by \textbf{other processes} (other than the kernel).
+        \begin{itemize}
+            \item This isolation is automatically enforced by the operating system.
+            \item One bennifit of isolation, is the ability to limit the reach of malicious processes.
+        \end{itemize}
         \item \textbf{Processes} may be composed of \textbf{several threads} allowing for \textbf{several instructions to be executed simultaneously}.
+    \end{itemize}
+
+    \subsection*{Process--Kernel Communication}
+    \begin{itemize}
+        \item \textbf{Processes} are not able to \textbf{directly access the kernel's memory}. Instead they use system calls, which interrupt the kernel, and indicate that a process requires a service.
+        \item The \textbf{kernel} can access all \textbf{process'} memory.
+    \end{itemize}
+
+    \subsection*{Sharing the CPU}
+    \begin{itemize}
+        \item When \textbf{several processes} are running, system \textbf{resources need to be shared}.
+        \item \textbf{Multiprogramming Operating Systems} \textbf{run processes} until they \textbf{block for an event}, when processes block for an event, they are \textbf{placed in a queue}, and the operating system executes \textbf{other processes}.
+        \begin{itemize}
+            \item This scheduling technique is bad because it could result in starvation if one process runs into an infinite loop.
+        \end{itemize}
+        \item \textbf{Time Sharing Operating Systems} give each \textbf{process} a \textbf{specific amount of time} to execute, and then \textbf{switch to the next}.
+        \begin{itemize}
+            \item This scheduling technique improves performance, and prevents starvation.
+            \item This scheduling technique also gives the illusion that each process is running concurrently.
+        \end{itemize}
+    \end{itemize}
+
+    \subsection*{Sharing Memory}
+    \begin{itemize}
+        \item Each process gets it's own \textbf{memory map}, which tells the \textbf{kernel} what memory belongs to the \textbf{process}.
+        \item The \textbf{single contiguous memory model} is a model where the \textbf{RAM is occupied by one process at a time}. When that process completes, another is loaded.
+        \begin{itemize}
+            \item This model limits the size of processes to the maximum amount of RAM, and can only execute one process at a time.
+        \end{itemize}
+        \item The \textbf{partition model} allows \textbf{multiple processes} to \textbf{occupy} the RAM \textbf{simultaneously}.
+        \begin{itemize}
+            \item As long as sufficient contiguous memory is available, new processes are allocated memory.
+            \item This model uses a partition table, that contains information about the allocated and unallocated memory (size, location, process occupying it).
+            \item The operating system should detect unallocated contiguous memory blocks, and merge them into one large block. This has a lot of overhead, and leads to poor performance.
+        \end{itemize}
+        \item Modern operating systems use \textbf{virtual memory}, and \textbf{segmentation.}
+        \begin{itemize}
+            \item \textbf{Virtual memory} splits ram into \textbf{fixed size partitions} called \textbf{page frames} (typically 4KB).
+            \item A \textbf{process} is \textbf{split} into \textbf{blocks of equal size} (block size = page frame size). Each block is numbered increamentally, however, the page frame they correspond to may or may not be consecutive.
+            \item \textbf{Each process} is given a \textbf{page table}, that maps \textbf{blocks} to \textbf{actual page frames}.
+            \item The processor \textbf{does not need to include all blocks} of a process in memory when it runs, only the ones that are required. It can \textbf{load} and \textbf{unload} them. 
+        \end{itemize}
+    \end{itemize}
+
+    \subsection*{Process Control Block}
+    \begin{itemize}
+        \item The \textbf{process control block (PCB)} contains information associated with a \textbf{single process}.
+        \item The PCB contains:
+        \begin{enumerate}
+            \item The \textbf{process state} (running, waiting, etc).
+            \item The \textbf{program counter} (location of the next instruction to execute).
+            \item \textbf{CPU register} values.
+            \item \textbf{CPU scheduling information} (priorities, queue pointers).
+            \item \textbf{Memory management information} (memory allocated to the process).
+            \item \textbf{Accounting information} (CPU used, clock time since start, time limits).
+            \item \textbf{I/O status information} (devices allocated to the process, file descriptors, etc). 
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{Process State Diagram}
+    \begin{center}
+        \includegraphics[width=300px]{images/Process-State-Diagram.png}
+    \end{center}
+
+    \subsection*{Process Creation}
+    \begin{itemize}
+        \item \textbf{Processes} are created from \textbf{forking}, which forms a \textbf{tree of processes} as more processes call fork.
+        \item The \textbf{main process} (PID 1) is the process that is responsible for \textbf{managing the operating system}.
+        \item \textbf{Copy on Write (COW)} | Initally, when fork is called \textbf{the pages are shared}. When data in the \textbf{shared pages change}, the OS \textbf{makes a copy of the page}, resulting in the child and the parent process having different copies of the specific page that changed.
+    \end{itemize}
+
+    \subsection*{Kernel Process Data}
+    \begin{itemize}
+        \item The kernel maintains a \textbf{page table}, a \textbf{process control block (PCB)}, and a \textbf{kernel stack} for each process.
+        \item When a \textbf{process forks}, the \textbf{new child process will contain a clone of the parents data}. This data will have minor differences (pid, page table, etc).
+        \begin{center}
+            \includegraphics[width=300px]{images/Fork.png}
+        \end{center}
+    \end{itemize}
+
+    \subsection*{Process Scheduling}
+    \begin{itemize}
+        \item \textbf{Process scheduling} is the way an \textbf{operating system} determines what \textbf{process' instructions} should be executed on a \textbf{CPU core}.
+        \item The \textbf{goal of process scheduling} is to \textbf{maximize CPU use}, and \textbf{quickly switch between processes}.
+        \item The \textbf{ready queue} is a queue of \textbf{processes} already in the main memory, that are \textbf{in the ready state}.
+        \item The \textbf{process scheduler} takes \textbf{processes from the queue, and executes them}.
+        \item The \textbf{scheduler} is triggered when a \textbf{timer interrupt occurs} or when a \textbf{process blocks for IO}. The \textbf{scheduler} will perform a \textbf{context switch} and start executing \textbf{another process}.
+        \begin{center}
+            \includegraphics[width=300px]{images/Context-Switch.png}
+        \end{center}
+    \end{itemize}
+
+    \subsection*{Process Termination}
+    \begin{itemize}
+        \item The \textbf{exit} system call returns an exit status to the \textbf{parent process}, which can be retrieved by the parent process by the \textbf{wait} system call.
+        \item After \textbf{exit} is invoked, the process' resources are \textbf{deallocated by the operating system}.
+        \item The \textbf{parent process} may \textbf{terminate the execution} of \textbf{itsself and/or it's child processes} with the \textbf{abort} system call.
+        \begin{itemize}
+            \item This may be done if the child has exceeded allocated resources, the child's task is no longer required, or the parent is exiting.
+        \end{itemize}
     \end{itemize}
 
 \end{document}
