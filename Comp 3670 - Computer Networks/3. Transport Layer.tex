@@ -95,8 +95,59 @@
         \item \textbf{Demultiplexing} works by receiving \textbf{IP datagrams} containing a \textbf{source and destination IP address and port as headers}. Each datagram contains a \textbf{single segment}.
         \begin{itemize}
             \item The IP addresses and port numbers are used to route the segment to the correct socket.
-            \item This is why you must specify a port number when creating a socket.
+            \item This is why you must specify a port (and sometimes an address) number when creating a socket.
         \end{itemize} 
     \end{itemize}
+
+    \subsection*{Connectionless Multiplexing}
+    \begin{itemize}
+        \item When creating a \textbf{server socket} you must specify a \textbf{port}, that the \textbf{socket will be bound to}.
+        \item When creating a \textbf{datagram (UDP)} you must specify the \textbf{destination host and port}.
+        \item When a \textbf{host} receives a \textbf{datagram} with the \textbf{port destination} that matches the \textbf{port the server socket is bound to}, it will \textbf{route the datagram} to \textbf{said socket}.
+        \begin{itemize}
+            \item The host address does not matter when a datagram is recieved by a host, it will simply attempt to route it to the destination port. This means that several hosts can send datagrams to the same port, and they will all be available at the same socket.
+        \end{itemize}  
+    \end{itemize}
+
+    \subsection*{Connection-Oriented Multiplexing}
+    \begin{itemize}
+        \item When creating a \textbf{connection oriented socket (TCP)}, you create a \textbf{4-tuple} containing the \textbf{source address, source port, destination address, and destination port}.
+        \item The \textbf{4-tuple} is used to \textbf{route inbound packets} to the \textbf{correct socket}.
+        \item \textbf{Servers} may support \textbf{several simultaneous TCP sockets}, typically one for \textbf{each client}. Each socket will have a \textbf{unique 4-tuple}.
+    \end{itemize}
+
+    \subsection*{Summary}
+    \begin{itemize}
+        \item Multiplexing and demultiplexing are based on segman, datagram header values.
+        \item UDP uses the port for demultiplexing.
+        \item TCP uses the 4-tuple for demultiplexing.
+        \item Multiplexing happens at all layers.
+    \end{itemize}
+    
+    \section*{\centering{User Datagram Protocol}}
+
+    \subsection*{User Datagram Protocol}
+    \begin{itemize}
+        \item The \textbf{User Datagram Protocol (UDP)} is a \textbf{connectionless (no handshake)} \textbf{communication protocol} that uses the \textbf{internet protcol}.
+        \item \textbf{UDP} has \textbf{minimal overhead}, at the cost of having \textbf{no connection state, no congestion control, and no packet delivery verification}.
+        \item \textbf{UDP} is used for \textbf{loss-tolerant, rate sensitive} applications.
+        \item It is possible to have \textbf{reliable UDP communication} by implementing it at the \textbf{application layer}.
+        \item[] \begin{center}
+                    \includegraphics[height=300px]{images/UDP.PNG}
+                \end{center}
+        \item \textbf{UDP datagrams} have the following headers:
+        \begin{enumerate}
+            \item \textbf{Destination port} | The port the datagram is being sent to.
+            \item \textbf{Length} | The length in octets of the datagram.
+            \item \textbf{Checksum} | The checksum is used to ensure the packet received was not corrupted during transmission.
+            \item \textbf{Pseudo} | A header containing the source address, destination address, the protocol, and the UDP length. This information is used to give protection against misrouted datagrams.
+        \end{enumerate} 
+        \item The \textbf{checksum} is computed by taking the \textbf{one's complement sum} of the \textbf{entire content} of the \textbf{datagram}, treating the bits of the datagram as a \textbf{series of 16-bit integers}.
+        \begin{itemize}
+            \item The checksum is not perfect, several different datagrams can result in the same checksum.
+        \end{itemize}
+    \end{itemize}
+
+    \section*{Reliable Data Transfer}
 
 \end{document}
