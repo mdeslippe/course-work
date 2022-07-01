@@ -305,4 +305,21 @@
         \end{itemize}        
     \end{itemize}
 
+    \section*{\centering{Socket Programming}}
+
+    \subsection*{Sockets}
+    \begin{itemize}
+        \item A \textbf{socket} is a \textbf{communication endpoint} that hosts use to \textbf{communicate}.
+        \item \textbf{Socket programming} is the process of \textbf{creating programs} that use \textbf{sockets} to \textbf{communicate}.
+    \end{itemize}
+
+    \subsection*{Types of Socket Programming}
+    \begin{itemize}
+        \item There are two types of socket programming:
+        \begin{enumerate}
+            \item \textbf{User Datagram Protocol (UDP)} | UDP is a protocol that \textbf{does not have a handshake} before data is exchanged. The sender may attempt to transmit data, but there is no confirmation that it was, or was not recieved.
+            \item \textbf{Transmission Control Protocol (TCP)} | TCP is a protocol that enables communication between a \textbf{client} and a \textbf{server}. Before the connection can be established, the \textbf{server} must be running with a socket. \textbf{Clients} can then connect to that socket, with their own socket. TCP has a \textbf{handshake} before messages are exchanged, and \textbf{ensures message delivery}.
+        \end{enumerate}
+    \end{itemize}
+
 \end{document}
