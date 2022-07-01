@@ -151,11 +151,92 @@
     \subsection*{Process Termination}
     \begin{itemize}
         \item The \textbf{exit} system call returns an exit status to the \textbf{parent process}, which can be retrieved by the parent process by the \textbf{wait} system call.
+        \begin{itemize}
+            \item When the \textbf{wait} system call is invoked, the parent goes into a \textbf{blocked state} until one of it's \textbf{children terminate}. If there are no children, -1 is returned.
+        \end{itemize}
         \item After \textbf{exit} is invoked, the process' resources are \textbf{deallocated by the operating system}.
         \item The \textbf{parent process} may \textbf{terminate the execution} of \textbf{itsself and/or it's child processes} with the \textbf{abort} system call.
         \begin{itemize}
             \item This may be done if the child has exceeded allocated resources, the child's task is no longer required, or the parent is exiting.
         \end{itemize}
+    \end{itemize}
+
+    \subsection*{Zombie Processes and Orphan Processses}
+    \begin{itemize}
+        \item When a \textbf{process terminates} it \textbf{still exists} in the operating system to allow the \textbf{parent process} to read the \textbf{child process' exiy status}. When a child process is in such a state, it is referred to as a \textbf{zombie process}.
+        \item When the \textbf{parent process} reads the \textbf{child process' status} the zombie process is removed.
+        \item If the \textbf{parent never} invokes the \textbf{wait} system call, the \textbf{zombie process} will exist \textbf{infinitely} (which is a resource leak).
+        \item An \textbf{orphan process} is a process whose \textbf{parent has termated} before it.
+        \item When a \textbf{process' parent termates before it}, it is \textbf{adopted by the first process (init process)}.
+    \end{itemize}
+
+    \section*{Interprocess Communication}
+
+    \subsection*{Process Concepts}
+    \begin{itemize}
+        \item \textbf{Each process} can only view \textbf{its virtual address}. It \textbf{cannot view others}, and \textbf{cannot determine the physical address mapping}.
+        \item \textbf{Processes} within a system may be \textbf{independent} or \textbf{cooperating}.
+        \item \textbf{Cooperating processes} can \textbf{affect} or be \textbf{affected} by \textbf{other processes}.
+        \item Reasons for \textbf{cooperating processes} include:
+        \begin{enumerate}
+            \item Information sharing.
+            \item Computation speed increase.
+            \item Modularity.
+            \item Convenience.
+        \end{enumerate}
+        \item \textbf{Cooperating processes} need \textbf{interprocess communication (IPC)}.
+        \item There are two \textbf{models} of \textbf{IPD}: \textbf{shared memory}, and \textbf{message passing}.
+    \end{itemize}
+
+    \subsection*{IPC Shared Memory}
+    \begin{itemize}
+        \item \textbf{IPC shared memory} involves \textbf{allocating memory} that \textbf{several processes can access}.
+        \item In this model, the \textbf{communication} is under the control of the \textbf{user's processes} not the \textbf{operating system}.
+        \item This model is \textbf{fast}, but it is \textbf{very difficult} to provice a mechanism that will allow the \textbf{user's process} to \textbf{synchronize their actions}.
+        \item[] \begin{center}
+                    \includegraphics*[height=150px]{images/Shared-Memory.PNG}
+                \end{center} 
+    \end{itemize}
+
+    \subsection*{IPC Message Passing}
+    \begin{itemize}
+        \item \textbf{IPC message passing} uses \textbf{shared memory} created \textbf{in the kernel}.
+        \item \textbf{Processes} then use system calls to \textbf{send}, and \textbf{receive data}.
+        \item This is \textbf{slower}, but allows for \textbf{processes} to easily \textbf{synchronize their communication}.
+        \item[] \begin{center}
+            \includegraphics*[height=150px]{images/Message-Passing.PNG}
+        \end{center} 
+    \end{itemize}
+
+    \subsection*{Pipes}
+    \begin{itemize}
+        \item To allow \textbf{two processes} to \textbf{communicate} using \textbf{message passing}, we use \textbf{pipes} to establish a \textbf{communication link}.
+        \item A \textbf{parent process} creates a pipe via the \textbf{fork} function, and can use it to communicate with \textbf{child processes}. 
+        \begin{itemize}
+            \item The pipe must be created before the child process.
+        \end{itemize}
+        \item \textbf{Pipes} are \textbf{unidirectional communication channels}  that consist of two file descriptors: \textbf{read} and \textbf{write} respectively. 
+    \end{itemize}
+
+    \subsection*{Named Pipes}
+    \begin{itemize}
+        \item \textbf{Named pipes} are \textbf{more powerful} than \textbf{ordinary pipes}.
+        \item \textbf{Named pipes} allow for \textbf{bidirectional communication}, and can be used by \textbf{more than two processes}.
+        \item \textbf{Named pipes} also do not require a \textbf{parent-child relationship} to establish communication.
+    \end{itemize}
+
+    \subsection*{Sockets}
+    \begin{itemize}
+        \item A \textbf{socket} is a \textbf{communication endpoint}.
+        \item \textbf{Sockets} are \textbf{bidirectional communication channels} that allow \textbf{two processes} to communicate \textbf{over a network}.
+        \item \textbf{Sockets} use \textbf{ports} which are \textbf{bound to file descriptors} to enable communication.
+        \item All \textbf{ports below 1024} are \textbf{well-known ports} that are used for standard services.
+    \end{itemize}
+
+    \subsection*{Remote Procedure Calls}
+    \begin{itemize}
+        \item \textbf{Remote Procedure Calls (RPC)} abstracts \textbf{procedure calls} between \textbf{processes} on \textbf{networked systems}.
+        \item \textbf{RPC} uses \textbf{sockets for communication}.
     \end{itemize}
 
 \end{document}
