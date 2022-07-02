@@ -1,0 +1,96 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{longtable}
+\usepackage[top=1in, bottom=0.25in, left=1.25in, right=1.25in,includefoot,heightrounded]{geometry}
+\usepackage{indentfirst}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx,tikz}
+\usepackage{hyperref}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[document]{ragged2e}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{flowchart}
+\usepackage{hyperref}
+\usetikzlibrary{arrows}
+
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{decision} = [diamond, minimum width=4cm, minimum height=0.5cm, text centered, draw=black, fill=green!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2cm, text width=4cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Myles Deslippe}
+\rhead{Comp 3300 | Operating System Fundamentals}
+\cfoot{\thepage}
+
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+\lstset{inputencoding=ansinew}
+\lstset{breaklines=true} 
+
+\begin{document}
+
+\section*{\centering{Threads}}
+
+\subsection*{Threads}
+\begin{itemize}
+    \item A \textbf{thread} is a \textbf{single sequential flow of control within a program}.
+    \item \textbf{Threads} are the \textbf{smallest unit of processing} that can be performed in an \textbf{operating system}.
+    \item A \textbf{single process} can have \textbf{more than one thread}; each thread having a unique \textbf{program counter, stack, thread id, and set of registers}.
+    \item \textbf{All threads} running under a \textbf{single} process have \textbf{shared memory (instructions, data, heap)}. They also can \textbf{communicate with each other directly}; there is no need for IPC.
+    \item The \textbf{amount of time} it takes to \textbf{switch between threads} is less than the \textbf{amount of time} it takes to \textbf{switch between processes}.
+    \item On \textbf{computer systems} that have \textbf{multiple cores}, \textbf{threads can run in parallel}.
+    \item[] \begin{center}
+                \includegraphics*[width=\textwidth-25pt]{images/Threads.jpg}
+            \end{center} 
+\end{itemize}
+
+\subsection*{Threads vs Processes}
+\begin{itemize}
+    \item \textbf{Threads} have \textbf{no data segment or heap}.
+    \item A \textbf{process has code, data, heap, and stack segmetns}.
+    \item A \textbf{thread} \textbf{cannot live on it's own}; it needs to be attached to a process.
+    \item \textbf{Processes} must have \textbf{atleast one thread}.
+    \item There can be \textbf{more than one thread in a single process}.
+    \item \textbf{Threads} in a \textbf{process} share data.
+    \item If a \textbf{thread dies}, it's \textbf{stack is reclaimed}.
+    \item If a \textbf{process dies}, all of it's \textbf{threads die}.
+\end{itemize}
+
+\subsection*{POSIX Threads}
+\begin{itemize}
+    \item To \textbf{create a thread} you use the \textbf{$\text{pcreate\_thread(thread, attr, start\_routine, arg)}$ function}.
+    \begin{itemize}
+        \item \textbf{thread} | An opaque, unique identifier for the new thread returned by the subroutine.
+        \item \textbf{attr} | An opaque attribute object that may be used to set thread attributes.
+        \item \textbf{$\text{start\_routine}$} | The routine that the thread will execute one it has been created.
+        \item \textbf{arg} | A single argument that may be passed to the \textbf{$\text{start\_routine}$}.
+    \end{itemize}
+    \item To \textbf{destroy a thread} you use the \textbf{$\text{pthread\_exit(status)}$ function}. This will \textbf{terminate the calling thread}, and \textbf{make the status available} to any \textbf{successful join with the terminating thread}.
+    \item To \textbf{wait for a thread to terminate}, you use the \textbf{$\text{pthread\_join(threadid, status)}$ function}. This will \textbf{suspend the execution} of the \textbf{calling thread} until the \textbf{target thread terminates}.
+\end{itemize}
+
+\subsection*{User Threads and Kernel Threads}
+\begin{itemize}
+    \item \textbf{User threads} are \textbf{threads} that are \textbf{managed} at the \textbf{user-level}.
+    \item \textbf{Kernel threads} are \textbf{threads} that are \textbf{managed by the kernel}.
+    \item \textbf{User threads} and \textbf{kernel threads} have the same capabilities. 
+\end{itemize}
+
+\subsection*{Multithreading Models}
+\begin{itemize}
+    \item There are three multithreading models:
+    \begin{enumerate}
+        \item \textbf{Many-to-One}.
+        \item \textbf{One-to-One}.
+        \item \textbf{Many-to-Many}.
+    \end{enumerate}
+\end{itemize}
+
+\end{document}
