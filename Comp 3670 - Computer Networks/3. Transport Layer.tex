@@ -148,6 +148,77 @@
         \end{itemize}
     \end{itemize}
 
-    \section*{Reliable Data Transfer}
+    \section*{\centering{Reliable Data Transfer}}
+
+    \subsection*{Reliable Data Transfer Overview}
+    \begin{itemize}
+        \item The \textbf{complexity} of the \textbf{reliable data transfer protocol} will strongly \textbf{depend} on the \textbf{characteristics} of the \textbf{unreliable channel} (drop packes, corruption, data reordering, etc).
+        \item The \textbf{sender} and \textbf{receiver} \textbf{do not know the state of each other}, unless it is \textbf{communicated}.
+    \end{itemize}
+
+    \subsection*{RDT 1.0 | Reliable Transfer over a Reliable Channel}
+    \begin{itemize}
+        \item In this case, the \textbf{underlying channel} is perfectly \textbf{reliable}; there are \textbf{no bit errors}, and \textbf{no loss of packets}.
+        \item This is the most primitive form of reliable data transfer; the \textbf{sender sends the data}, and the \textbf{receiver reads the data}.
+        \item[] \includegraphics*[width=\textwidth - 25pt]{images/RDT-1.0.PNG}
+    \end{itemize}
+    
+    \subsection*{RDT 2.0 | Channel with Bit Errors}
+    \begin{itemize}
+        \item In this case, the \textbf{underlying channel} may \textbf{flip bits in packets randomly}. To determine if this happend we can use a \textbf{checksum}.
+        \item To \textbf{recover from errors}, we can have the \textbf{receiver send a respone}.
+        \begin{itemize}
+            \item The \textbf{acknowledgement (ACK) response} indicates that the \textbf{packet was successfully transmitted}.
+            \item The \textbf{negative acknowledgement (NAK) response} indicates that the \textbf{packet was not successfully transmitted}.
+            \item If the \textbf{sender} recieves a \textbf{NAK response}, they must \textbf{retransmit the packet}.
+        \end{itemize} 
+        \item The \textbf{sender} must \textbf{stop and wait} for a resonse, before sending the next packet.
+        \item[] \includegraphics*[width=250px]{images/RDT-2.0.PNG} \includegraphics*[width=100px]{images/RDT-2.0-1.PNG}
+        \item \textbf{RDT 2.0 has a fatal flaw}, if the \textbf{ACK} or \textbf{NAK} gets \textbf{corrupted}, the \textbf{sender} won't know if the \textbf{receiver} received the packet.
+        \begin{itemize}
+            \item You can't retransmit the packet, it could result in a possible duplicate.
+        \end{itemize} 
+    \end{itemize}
+
+    \subsection*{RDT 2.1 | Handling Corrupted ACKs and NAKs}
+    \begin{itemize}
+        \item In the case where the \textbf{receiver's response} gets \textbf{corrupted}, we can add a \textbf{sequence number to each packet}. This will allow the reciever to detect duplicate packets.
+        \item[] \begin{center}
+                    \includegraphics*[height=200px]{images/RDT-2.1.PNG}
+                \end{center}
+        \item[] \begin{center}
+                   \includegraphics*[height=200px]{images/RDT-2.1-1.PNG}
+                \end{center}
+    \end{itemize}
+
+    \subsection*{RDT 2.2 | A NAK-free Protocol}
+    \begin{itemize}
+        \item This protocol has the \textbf{same functionality as 2.1}, but it only uses \textbf{ACKs}.
+        \item \textbf{Instead of NAK}, the \textbf{receiver} sends \textbf{ACK} for the \textbf{last packet recieved OK}.
+        \begin{itemize}
+            \item The receiver must explicitally include the sequence number of the packet being ACKed.
+        \end{itemize}
+        \item A \textbf{duplicated ACK} at the \textbf{sender} results in the \textbf{same action as NAK}; retransmit the current packet.
+        \item[]
+                    \includegraphics*[width=\textwidth-25pt]{images/RDT-2.2.PNG}
+    \end{itemize}
+
+    \subsection*{RDT 3.0 | Channels with Bit Errors and Packet Loss}
+    \begin{itemize}
+        \item In this case the \textbf{underlying channel} can \textbf{lose packets, and corrupt packets}.
+        \item The checksum, sequence of numbers, ACKs, and restransmission will help, but will not be enough.
+        \item In this protocol, the \textbf{sender waits a "reasonable" anout of time} for an \textbf{ACK}, if \textbf{ACK is not recieved} within a reasonable amount of time, the \textbf{sender} will \textbf{retransmit the packet}.
+        \begin{itemize}
+            \item If the packet ACK was just delayed and not lost, the sequence number will allow to reciever to discard the duplicate packet.
+            \item When the reciever is sending the ACK, they must specify the packet number they are ACKing.
+        \end{itemize}
+        \item[] \begin{center}
+                    \includegraphics*[width=300px]{images/RDT-3.0.PNG} 
+                \end{center}
+        \item[] \begin{center}
+                    \includegraphics*[width=300px]{images/RDT-3.0-1.PNG} 
+                \end{center}
+
+    \end{itemize}
 
 \end{document}
