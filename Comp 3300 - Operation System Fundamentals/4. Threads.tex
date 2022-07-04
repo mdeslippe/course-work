@@ -93,4 +93,29 @@
     \end{enumerate}
 \end{itemize}
 
+\subsection*{Thread Issues}
+\begin{itemize}
+    \item One \textbf{issue} with multiple threads is the behaviour of the \textbf{fork} system call. \textbf{Should fork duplicate the calling thread, or all threads?}.
+    \begin{itemize}
+        \item In practice, both variations are used.
+    \end{itemize}
+    \item Another \textbf{issue} with multiple threads is \textbf{where signals should be delivered to}.
+    \begin{itemize}
+        \item We could deliver the signal to the thread it corresponds to.
+        \item We could deliver the signal to all threads in the process.
+        \item We could deliver the signal to certain threads in the process.
+        \item We could assign a specific thread to receive all signals for the process.
+    \end{itemize}
+    \item Another \textbf{issue} is \textbf{thread cancellation}, i.e. terminaing a thread before it is finished.
+    \begin{itemize}
+        \item There are two general approaches:
+        \begin{enumerate}
+            \item \textbf{Asynchronous cancellation} terminates the target thread \textbf{immediately}.
+            \item \textbf{Deferred cancellation} allows the target thread to \textbf{periodically check} if it should be cancelled.
+        \end{enumerate}
+        \item The \textbf{state of the thread} also affects cancellation.
+    \end{itemize}
+    \item 
+\end{itemize}
+
 \end{document}
