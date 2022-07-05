@@ -199,8 +199,7 @@
             \item The receiver must explicitally include the sequence number of the packet being ACKed.
         \end{itemize}
         \item A \textbf{duplicated ACK} at the \textbf{sender} results in the \textbf{same action as NAK}; retransmit the current packet.
-        \item[]
-                    \includegraphics*[width=\textwidth-25pt]{images/RDT-2.2.PNG}
+        \item[] \includegraphics*[width=\textwidth-25pt]{images/RDT-2.2.PNG}
     \end{itemize}
 
     \subsection*{RDT 3.0 | Channels with Bit Errors and Packet Loss}
@@ -218,7 +217,127 @@
         \item[] \begin{center}
                     \includegraphics*[width=300px]{images/RDT-3.0-1.PNG} 
                 \end{center}
+        \item The \textbf{stop-and-wait} operation the \textbf{sender} has to undergo is \textbf{very slow}; It reduces the maximum transmission rate.
+    \end{itemize}
 
+    \subsection*{RDT 3.0 | Pipelined Protocol Operations}
+    \begin{itemize}
+        \item \textbf{Pipelining} is when the \textbf{sender} allows for \textbf{multiple in-flight} (yet to be acknowledged) \textbf{packets}.
+        \begin{itemize}
+            \item The range of the sequence numbers must be increased.
+            \item Buffering is required and the sender's end and the reciever's end.
+        \end{itemize}
+        \item \textbf{Pipelining} allows for increased utilization.
+    \end{itemize}
+
+    \subsection*{RDT 3.0 | Pipelined Go-Back-N Protocol}
+    \begin{itemize}
+        \item In the \textbf{Go-Back-N protocol}, the \textbf{sender} sends a \textbf{"window"} of up to \textbf{N}, consecutively transmitted (unacknowldeg) \textbf{packes}.
+        \item After the sender recieves a \textbf{cumulative ACK} (acknowledgement of all packets up to n), the \textbf{sender} moves the \textbf{window forward to begin at n+1}.
+        \item If a timeout occurs, simply retransmit the window.
+        \item In the \textbf{Go-Back-N protocol}, the \textbf{receiver} sends an \textbf{ACK} for the \textbf{correctly-received packets} so far, with the highest \textbf{in-order} sequence numbers (This may generate duplicate ACKs).
+        \item If the \textbf{receiver} receives \textbf{out-of-order packets}, they can either reorder them, or discard and re-ACK (it depends on the implementation).
+    \end{itemize}
+
+    \subsection*{RDT 3.0 | Pipelined Selective Repeat Protocol}
+    \begin{itemize}
+        \item In the \textbf{Selective Repeat protocol}, the \textbf{receiver individually acknowledges} all \textbf{correctly received pacakets}.
+        \begin{itemize}
+            \item The receiver buffers the packets, as needed, for an eventual in-order delivery to the uppter layer.
+        \end{itemize}
+        \item The \textbf{sender retransmits unACKed packets}.
+        \begin{itemize}
+            \item The sender must maintain a timer for each unACKed packet.
+        \end{itemize}
+        \item[] \includegraphics*[width=\textwidth - 25pt]{images/Selective-Repeat-Protocol.PNG}
+    \end{itemize}
+
+    \subsection*{Principals of Congestion Control}
+    \begin{itemize}
+        \item Informally, \textbf{congestion} occurs when \textbf{too may sources are sending data too fast} for a \textbf{network to handle}.
+        \begin{itemize}
+            \item Indicators that congestion is occuring are \textbf{long delays, and packet loss}.
+        \end{itemize}
+        \item One the indicators of congestion occur, the sender should act accordingly.
+        \item There is also \textbf{network-assisted congestion control}; \textbf{routers} provide \textbf{direct feedback} to the \textbf{sending} and \textbf{receiving} hosts (may indicate congestion level as-well).
+    \end{itemize}
+
+    \section*{\centering{Connection-Oriented Transportation: TCP}}
+
+    \subsection*{Transmission Control Protocol (TCP) Overview}
+    \begin{itemize}
+        \item TCP is is/does the following:
+        \begin{enumerate}
+            \item \textbf{Point-To-Point}: There is one sender, and one receiver.
+            \item \textbf{Reliable, in-order byte stream}: There are no "message boundaries".
+            \item \textbf{Full Duplex}: There is bi-directional data flow in a single connection.
+            \item \textbf{Pipelined}: TCP congestion and flow-control can set the window size.
+            \item \textbf{Connection-Oriented}: Handshaking is used to initalize the sender and receiver state before the data exchange begins.
+            \item \textbf{Flow Controlled}: The sender will not overwhelm the receiver.
+            \item \textbf{Supports cumulative ACKs}.
+        \end{enumerate}
+        \item The \textbf{TCP specification does not specify} how to handle \textbf{out-of-order packets}; it is up to the specific implementation. 
+        \item The \textbf{TCP timeout period} must be carefully set. If it is \textbf{too short}, premature timeout occurs. If it is \textbf{too long}, there is a slow reaction to segment loss.
+        \item To estimate the \textbf{route-trip time (RTT)} you do the following:
+        \begin{enumerate}
+            \item Measure the time starting when a single segmant transmisstion is sent, and stopping when you receive an ACK receipt. Set $EstimatedRTT$ equal to this time length.
+            \item Repeat the process as your transmit more segments, updating the $EstimatedRTT$ with the following formula: $EstimatedRTT=(1-\alpha)\times{EstimatedRTT}+\alpha\times{SampleRTT}$ (A typical $\alpha$ value is 0.125).
+        \end{enumerate}
+        \begin{itemize}
+            \item When actually setting the timeout period, you should add a \textbf{saftey margin}. 
+        \end{itemize}
+        \item \textbf{TCP Fast Re-Transmit}: When the \textbf{sender} receives \textbf{three ACKs} for \textbf{the same data}, the \textbf{sender} should \textbf{re-transmit all unACKed segments}.
+    \end{itemize}
+
+    \subsection*{TCP Segment Structure}
+    \begin{itemize}
+        \item[] \includegraphics*[width=\textwidth - 25pt]{images/TCP.PNG}
+        \item \textbf{TCP segments} are \textbf{composed of 10 sections}:
+        \begin{enumerate}
+            \item \textbf{Source Port}: The port the segment is coming from.
+            \item \textbf{Destination Port}: The port the segment is going to.
+            \item \textbf{Sequence Number}: The number of bytes in the bytestream.
+            \item \textbf{Acknowledgements}: Sequence number of the next byte expected from the other side, and cumulative ACKs.
+            \item \textbf{Length and Flags}: The length of the TCP header, and other flags.
+            \item \textbf{Receive Window}: The number of bytes the receiver is willing to accept (flow control).
+            \item \textbf{Checksum}: A checksum to verify the segment was received correctly.
+            \item \textbf{Url Data Pointer}: Indicates how many bytes from the first are urgent.
+            \item \textbf{TCP Options}: Additional options (variable length).
+            \item \textbf{Applicaton Data}: The payload (variable length).
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{TCP Connection Creation}
+    \begin{itemize}
+        \item \textbf{Before data} is \textbf{exchanged}, the \textbf{sender} and the \textbf{receiver} perform a \textbf{handshake}.
+        \item This let's both sides know that \textbf{the other side agrees to establish a connection}, and that they \textbf{agree on connection parameters}.
+        \item \textbf{TCP} uses a \textbf{3-way handshake} to establish a connection.
+        \item[] \includegraphics*[width=\textwidth - 25pt]{images/TCPHandShake.PNG}
+    \end{itemize}
+
+    \subsection*{TCP Flow Control}
+    \begin{itemize}
+        \item \textbf{TCP flow control} is achieved by the \textbf{receiver} setting the \textbf{window section of the TCP segment} specifying \textbf{how many segments it is able to receive}.
+        \item This will prevent the receiver from being overwhelmed.
+    \end{itemize}
+
+    \subsection*{TCP Connection Termination}
+    \begin{itemize}
+        \item To \textbf{terminate a TCP connection}, the \textbf{client} and the \textbf{server} both \textbf{close their side of the connection}; by sending a \textbf{TCP segment} with the \textbf{FIN} bit set to \textbf{1}.
+        \item They respond to the \textbf{FIN} with \textbf{ACK}; the ACK response can be combined with FIN.
+        \item Simultaneous FIN exchanges can be handled.
+    \end{itemize}
+
+    \subsection*{TCP Congestion Control: AIMD}
+    \begin{itemize}
+        \item \textbf{AIMD} stands for \textbf{Additive Increase, Multiplicative Decrease}.
+        \item The \textbf{sender} can \textbf{increase the sending rate} until \textbf{congestion occurs}, then decrease.
+        \begin{itemize}
+            \item When increasing the transmission rate, you increase the sending rate by 1 maximum segment size every RTT until loss is detected.
+            \item When decreasing the transmission rate, you cut the rate in half at each loss event.
+        \end{itemize}
+        \item \textbf{AIMD} has been shown to \textbf{optomize congested flow rates network-wide}, and is stable.
+        \item When a \textbf{connection is first established}, the segments should start off being sent \textbf{really slow, and increase exponentially until lose occurs}. After \textbf{loss occurs}, follow the \textbf{AIMD} principals.
     \end{itemize}
 
 \end{document}
