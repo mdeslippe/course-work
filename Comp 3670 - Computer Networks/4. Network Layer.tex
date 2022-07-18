@@ -1,0 +1,86 @@
+\documentclass[16pt]{article}
+\usepackage[english]{babel}
+\usepackage{longtable}
+\usepackage[top=1in, bottom=0.25in, left=1.25in, right=1.25in,includefoot,heightrounded]{geometry}
+\usepackage{indentfirst}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx,tikz}
+\usepackage{hyperref}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[document]{ragged2e}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{flowchart}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usetikzlibrary{arrows}
+
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{decision} = [diamond, minimum width=4cm, minimum height=0.5cm, text centered, draw=black, fill=green!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2cm, text width=4cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Myles Deslippe}
+\rhead{Comp 3670 | Computer Networks}
+\cfoot{\thepage}
+
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+\lstset{inputencoding=ansinew}
+\lstset{breaklines=true} 
+
+\begin{document}
+
+\section*{\centering{The Network Layer}}
+
+    \subsection*{Services and Protocols}
+    \begin{itemize}
+        \item To transport \textbf{segments} from the \textbf{sending host}, to the \textbf{receiving host} the following happens:
+        \begin{enumerate}
+            \item The \textbf{sender} \textbf{encapsulates segments} into \textbf{datagrams} and passes them to the \textbf{link layer}.
+            \item The \textbf{receiver delivers segments} to the \textbf{transport layer protocol}. 
+            \item A \textbf{router} is a piece of \textbf{network hardware} than manages \textbf{traffic between networks}.
+            \begin{itemize}
+                \item Routers work by examining the headers in \textbf{IP datagrams (Packets)}, and move the datagrams from \textbf{input ports} to \textbf{output ports}; with the goal of transfering datagrams along the end-end path.
+                \item Routers work a the \textbf{Network Layer (Layer 3)}, and also use layers 1 and 2 to facilitate the data transfer.
+                \item Routers us \textbf{Internet Protocol Addresses (IP Address)} to identify networks / hosts.
+            \end{itemize}
+            \item  
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{Key Network-Layer Functions}
+    \begin{itemize}
+        \item One key network-layer function is \textbf{forwarding}, \textbf{forwarding} involves \textbf{moving packets} from a \textbf{rounter's input link} to the appropriate \textbf{output link}.
+        \item Another key network-layer function is \textbf{routing}, \textbf{routing} involves \textbf{determining the route taken by packets} from the \textbf{source} to the \textbf{destination}.
+        \begin{itemize}
+            \item There are many routing algorithms that can be used the achieve this.
+        \end{itemize}
+        \item 
+    \end{itemize}
+
+    \subsection*{The Data Plane vs The Control Plane}
+    \begin{itemize}
+        \item The \textbf{data plane} is a \textbf{local, per-router function} that \textbf{determines how packets} arriving on a router's input port \textbf{is forwarded to router's output port}.
+        \item The \textbf{control plane} is a \textbf{network-wide} function, that \textbf{determines how packets are routed amongst routers} along end-end paths from \textbf{source host} to \textbf{destination host}.
+        \begin{itemize}
+            \item There are two control-plane approaches:
+            \begin{enumerate}
+                \item \textbf{Traditional routing algorithms} that are implemented in routers.
+                \item \textbf{Software-defined networking (SDN)} that is implemented in remote servers.
+            \end{enumerate}
+        \end{itemize}
+    \end{itemize}
+
+    \subsection*{Per-Router Control Plane}
+    \begin{itemize}
+        \item One way to implemented a \textbf{control-plane routing algorithm} is in \textbf{every router}. Each router determines the \textbf{next, best, destination}. 
+    \end{itemize}
+
+\end{document}
