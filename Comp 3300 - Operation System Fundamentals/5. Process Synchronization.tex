@@ -75,4 +75,79 @@
 
 \section*{\centering{Hardware Syncronization}}
 
+\subsubsection*{Hardware Solution}
+\begin{itemize}
+    \item The \textbf{hardware solution} always executes the \textbf{lock check, and set} in the same intruction. This avoids a \textbf{context-switch} inbetwwen, which would not allow for mutual exclusion.
+    \item This solution is called a \textbf{Test and Set Intruction}. It works by writing to a memory location, and returning its old value.
+    \begin{verbatim}
+        // Instruction provided by hardware, 
+        //not program code.
+        // You use the return value to determine 
+        //if the lock is set (0 => lock is unset, 1 => lock is set).
+        int test_and_set(int *L) {
+            int prev = *L;
+            *L = 1;
+            return prev;
+        }    
+    \end{verbatim}
+    \item If \textbf{two processors} execute the \textbf{test-and-set instruction} at the same time, the \textbf{hardware ensures} that one \textbf{test-and-set} does \textbf{both} of it's steps before the other one starts.
+\end{itemize}
+
+\subsection*{Intel HD Support (xchg Instruction)}
+\begin{itemize}
+    \item \textbf{Intel CPUs} have an \textbf{xchg instruction}. If two CPUs execute \textbf{xchg} at the same time, the hardware ensures that only one \textbf{xchg completes}, before the second begins.
+    \item The \textbf{xchg} instruction takes in two registers as \textbf{two operands} and \textbf{swaps their values} atomically. This behaviour acts identically to the test-and-set solution.
+\end{itemize}
+
+\subsection*{Hgh Level Constructs}
+\begin{itemize}
+    \item A \textbf{Spinlock} is a mechanism for locking a resource. It works as follows: One process will \textbf{acquire the lock}, adn the other processes will wait in a loop repeatedly checking if the lock is available, once the first process \textbf{releases the lock}, other processes will \textbf{acqire it}.
+    \begin{verbatim}
+        void acquire(int *locked) {
+            int val = 1;
+            while (1) {
+                xchg(locked, &val)
+
+                if(val == 0)
+                    break;
+            }
+        }
+
+        void release(int *locked) {
+            *locked = 0;
+        }
+    \end{verbatim}
+    \begin{itemize}
+        \item This mechanism is inefficient, becuase the CPU will waste time executing the loops while other processes wait for the lock to be released.
+        \item It is useful for short critical sections, but not when the period of wait in unpredicatable or will take a long time.
+    \end{itemize}
+    \item A \textbf{Mutex} is a mechanism for locking a resource, if the lock is set, other processes that need accesses to the lock resource will \textbf{sleep} until it is release. When the processes that has \textbf{currently acquired the lock releases it}, it will \textbf{wake up the other sleeping processes}.
+    \begin{verbatim}
+        void lock(int *locked) {
+            while (1) {
+                while (1) {
+                    xchg(locked, &val)
+    
+                    if(val == 0)
+                        break;
+                    else
+                        sleep();
+                }
+            }
+
+            void release(int *locked) {
+                *locked = 0;
+                wakeup();
+            }
+        }
+    \end{verbatim}
+    \begin{itemize}
+        \item This is more efficient, as it does not waste the CPU's time.
+        \item There is a problem with this solution, known as the \textbf{Thundering Herd Problem}: If there are a large number of processes waiting to access the resource, and wakeup is called, all of the processes wake up at the same time. This leads to a large amount of context-switches. If more processes continue to wait, this could lead to \textbf{starvation}.
+        \item The \textbf{Thundering Heard Problem} can be solved by placing the processes waiting to access the resource in a \textbf{queue}.
+    \end{itemize}
+    \item A \textbf{Semaphore} is mechanism for managing shared membery, that is used to produce and consume data (i.e. to solve the problem of the producer, or consumer being faster).
+    \item A \textbf{Semaphore} uses an unsigned integer with two functions: wait, and post. The wait function is used to wait until the counter goes above 0, decrements it and pulls 1 data entry. The post function is used when new data is being posted, and increments the counter.
+\end{itemize}
+
 \end{document}
