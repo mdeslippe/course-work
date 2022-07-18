@@ -340,4 +340,37 @@
         \item When a \textbf{connection is first established}, the segments should start off being sent \textbf{really slow, and increase exponentially until lose occurs}. After \textbf{loss occurs}, follow the \textbf{AIMD} principals.
     \end{itemize}
 
+    \subsection*{TCP Congestion Congrol: Details}
+    \begin{itemize}
+        \item \textbf{cwnd} is a dynamically adjusted variable, that is adjusted in response to observed network congestion (implementing TCP congestion control).
+        \item TCP sends \textbf{cwnd bytes}, waits \textbf{RTT} for \textbf{acks}, then sends \textbf{more bytes}.
+        \begin{itemize}
+            \item TCP Rate = $\frac{cwnd}{RTT}$ bytes/sec.
+        \end{itemize}
+        \item The \textbf{TCP sender limits the transmission to LastByteSent - LastByteAcked <= cwnd}. 
+    \end{itemize}
+
+    \subsection*{TCP Slow-Start}
+    \begin{itemize}
+        \item When \textbf{connections are initated}, the \textbf{rate of transmission} is \textbf{increased exponentially} until the \textbf{first loss event}.
+        \item Initially, \textbf{cwnd = 1 MSS}, and is \textbf{doubled} every \textbf{RTT} (performed by incrementing cwnd everything an ACK is recieved).
+        \item The growth of \textbf{cwnd} should switch from an \textbf{exponential growth} to a \textbf{linear growth} when \textbf{cwnd gets  to 1/2 of it's value before timeout}.
+        \begin{itemize}
+            \item On a loss event, ssthresh is set to 1/2 * cwnd before the loss event occurred.
+        \end{itemize}  
+        \item[] \begin{center}
+                    \includegraphics*[width=\textwidth - 25pt]{images/TCP-Congestion-Control.PNG}
+                \end{center}
+    \end{itemize}
+
+    \subsection*{Delay-Based TCP Congestion Control}
+    \begin{itemize}
+        \item The \textbf{goal} is to keep the \textbf{sender-to-receiver pipe "just fool eneough, but no fuller"}, meaning keep the bottleneck link busy, but avoid high delays/buffering.
+        \item The \textbf{delay-based approach} takes the \textbf{minimum-RTT of an uncongested path}, the uncongested througput with congestion window cwnd is cwnd/minimum-RTT.
+        \begin{itemize}
+            \item If the meased throughput is very close to the uncongested throughput, increase cwnd linearly.
+            \item If the measured throughput is far below the uncongested throughput, decrease cwnd linearly.
+        \end{itemize}
+    \end{itemize}
+
 \end{document}
