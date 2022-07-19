@@ -146,8 +146,20 @@
         \item There is a problem with this solution, known as the \textbf{Thundering Herd Problem}: If there are a large number of processes waiting to access the resource, and wakeup is called, all of the processes wake up at the same time. This leads to a large amount of context-switches. If more processes continue to wait, this could lead to \textbf{starvation}.
         \item The \textbf{Thundering Heard Problem} can be solved by placing the processes waiting to access the resource in a \textbf{queue}.
     \end{itemize}
-    \item A \textbf{Semaphore} is mechanism for managing shared membery, that is used to produce and consume data (i.e. to solve the problem of the producer, or consumer being faster).
+    \item A \textbf{Semaphore} is mechanism for managing shared memory, that is used to produce and consume data (i.e. to solve the problem of the producer, or consumer being faster).
     \item A \textbf{Semaphore} uses an unsigned integer with two functions: wait, and post. The wait function is used to wait until the counter goes above 0, decrements it and pulls 1 data entry. The post function is used when new data is being posted, and increments the counter.
+    \begin{verbatim}
+        void wait(int *S) {
+            while (*S <= 0);
+            *S--;
+        }
+
+        void post(int *S) {
+            *S++;
+        }
+    \end{verbatim}
+    \item \textbf{Semaphores are atomic}, if one \textbf{process} or \textbf{thread} increments the integer, and another decrements, the two operations \textbf{cannot interrupt each other}.
+    \item We can use \textbf{semaphores} to solve the \textbf{critical section probelm} by having a \textbf{binary semaphore}, but is it not recommended because anythread can unlock it instad of the thread executing it's critical section.
 \end{itemize}
 
 \end{document}
