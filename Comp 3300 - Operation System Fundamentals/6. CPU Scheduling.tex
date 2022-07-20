@@ -1,0 +1,111 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{longtable}
+\usepackage[top=1in, bottom=0.25in, left=1.25in, right=1.25in,includefoot,heightrounded]{geometry}
+\usepackage{indentfirst}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx,tikz}
+\usepackage{hyperref}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[document]{ragged2e}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{flowchart}
+\usepackage{hyperref}
+\usetikzlibrary{arrows}
+
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{decision} = [diamond, minimum width=4cm, minimum height=0.5cm, text centered, draw=black, fill=green!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2cm, text width=4cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Myles Deslippe}
+\rhead{Comp 3300 | Operating System Fundamentals}
+\cfoot{\thepage}
+
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+\lstset{inputencoding=ansinew}
+\lstset{breaklines=true} 
+
+\begin{document}
+
+\section*{\centering{CPU Scheduling}}
+
+    \subsection*{CPU Scheduling}
+    \begin{itemize}
+        \item \textbf{CPU scheduling} is the task performed by the \textbf{CPU} that decides \textbf{the order processes should be executed}.
+        \item To \textbf{schedule processes} a \textbf{queue} is used.
+    \end{itemize}
+
+    \subsection*{Types of Processes}
+    \begin{itemize}
+        \item There are \textbf{two types} of \textbf{processes}:
+        \begin{enumerate}
+            \item \textbf{I/O Bound} processes are processes that have small bursts of CPU activity, and then wait for I/O. These type of processes directly affect the user interaction, so they should have a higher priority.
+            \item \textbf{CPU Bound} processes are processes that have little to no I/O, they mostly perform computations. These types of processes are able to function with a lower priority.
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{Scheduling Criteria}
+    \begin{itemize}
+        \item \textbf{Maximize CPU utilization} | We want to keep the CPU as busy as possible.
+        \item \textbf{Maximize throughput} | We want to maximize the amount of processes that complete their execution per time unit.
+        \item \textbf{Minimize turnaround time} | We want to minimize the amount of time it takes to execute a process.
+        \item \textbf{Minimize waiting time} | We want to minimize the amount of time a processes has to wait before getting executed.
+        \item \textbf{Minimize response time} | We want to minimize the amount of time it takes from when a request was submitted, to the first response.
+        \item \textbf{Fairness} | We want to give each process a fair share of the CPU.
+    \end{itemize}
+
+    \subsection*{First Come First Server (FCFS) Scheduling}
+    \begin{itemize}
+        \item This algorithm works by \textbf{fully executing processes} in the order they are \textbf{placed into the queue}.
+        \item This algorithm is simple, and fair. However, it wait time depends on the arrival time, and short processes will be stuck waiting for long processes to complete.
+        \item This algorithm could also cause the system to half if a single process enters an infinite loop.
+    \end{itemize}
+
+    \subsection*{Shortest-Job-First (SJF) Scheduling}
+    \begin{itemize}
+        \item This algorithm works by \textbf{associating} each \textbf{processes} by the length of it's \textbf{next CPU burst}. These lengths are then used to schedule the processes with the shortest time first.
+        \item Implementing this algorithm with \textbf{no preemption}, the process continues to execute until it's CPU burst is complete.
+        \item Implementing this algorithm with \textbf{preemption}, the process continues to execute but may be paused to switch to a shorter process that enteres the queue.
+        \item This algorithm has a more optimal minimum average time, but is not pratical. It is too difficult to predict burt times, and may lead to starvation of really long jobs.
+    \end{itemize}
+
+    \subsection*{Round Robin Scheduling}
+    \begin{itemize}
+        \item This algorithm works by assigning \textbf{each process} a \textbf{small unit of CPU time} (time quantum q). This time is ussually 10-100 milliseconds. \textbf{After this time has elapsed}, the \textbf{process} is \textbf{preempted} and added to the \textbf{end of the ready queue}.
+    \end{itemize}
+
+    \subsection*{Priority Scheduling}
+    \begin{itemize}
+        \item A \textbf{priority} is an \textbf{integer} associated with \textbf{each process}.
+        \item In this algorithm, the \textbf{CPU} is allocated to the \textbf{process with the highest priority} (smallest integer).
+        \begin{itemize}
+            \item There is a \textbf{preemtive}, and \textbf{non-preemtive} version of the algorithm.
+        \end{itemize}
+        \item \textbf{SFJ} is \textbf{priority scheduling} where priority is the inverse of predicted next CPU burst time.
+        \item The main problem with this algorithm is that \textbf{low priority processes} may \textbf{never execute}. The solotuon to this is \textbf{aging}, as a \textbf{processes ages, it's priority is increased}.
+    \end{itemize}
+
+    \subsection*{Multi-Level Queue Scheduling}
+    \begin{itemize}
+        \item \textbf{Multi-Level queue scheduling} works by creating a ready queue, and \textbf{partitioning it into seperate queues} (eg foreground, background).
+        \item \textbf{Processes} permanently stay in \textbf{a single partition}.
+        \item Each \textbf{queue} has it's own \textbf{scheduling algorithm} (foreground uses RR, background uses FCFS).
+        \item \textbf{Scheduling} must be done \textbf{between the queues}. To do this, \textbf{time slicing} is used. Each queue gets a \textbf{certain amount of CPU time}, which it can schedule amongst \textbf{it's processees}.
+    \end{itemize}
+
+    \subsection*{Multi-Level Feedback Queue Scheduling}
+    \begin{itemize}
+        \item The \textbf{Multi-Level queue} algorithm does not allow process to \textbf{change queues}, which is a problem, as the functionality of \textbf{processes can change over time}. (eg from foreground to background).
+        \item The \textbf{Multi-Level feedback queue} algorithm allows processes to \textbf{change queues} based on the \textbf{characteristics of their CPU bursts}.
+    \end{itemize}
+
+\end{document}
