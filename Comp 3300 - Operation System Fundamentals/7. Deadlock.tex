@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{longtable}
+\usepackage[top=1in, bottom=0.25in, left=1.25in, right=1.25in,includefoot,heightrounded]{geometry}
+\usepackage{indentfirst}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx,tikz}
+\usepackage{hyperref}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[document]{ragged2e}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{flowchart}
+\usepackage{hyperref}
+\usetikzlibrary{arrows}
+
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{decision} = [diamond, minimum width=4cm, minimum height=0.5cm, text centered, draw=black, fill=green!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2cm, text width=4cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Myles Deslippe}
+\rhead{Comp 3300 | Operating System Fundamentals}
+\cfoot{\thepage}
+
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+\lstset{inputencoding=ansinew}
+\lstset{breaklines=true} 
+
+\begin{document}
+
+    \section*{\centering{Deadlock}}
+
+    \subsection*{System Model}
+    \begin{itemize}
+        \item \textbf{Computer systems} consist of \textbf{resources} (for example CPU, memory, and I/O devices).
+        \item We also consider tools like \textbf{locks, and semaphores} to be \textbf{resources}.
+        \item Each resource of type $R_i$ has $W_i$ instacnes.
+        \item When a \textbf{process} utilizes a resource the following happens:
+        \begin{enumerate}
+            \item The process \textbf{requests} the resource.
+            \item The process \textbf{uses} the resource.
+            \item The process \textbf{releases} the resource.
+        \end{enumerate}
+        \begin{itemize}
+            \item Processes can request as many resources as they need, it is not restricted. However, the number of resources requested cannot exceed the amount of resources available.
+            \item Processes may need to wait for resources to become available before their request is granted.
+        \end{itemize}
+        \item The operating system uses a \textbf{system table} to record the status of \textbf{resources} (unallocated / allocated). If a resource is allocated, the process / thread allocating it is also recorded.
+    \end{itemize}
+
+    \subsection*{Deadlock}
+    \begin{itemize}
+        \item A set of \textbf{threads} are said to be \textbf{in a deadlocked state} when \textbf{every thred} in the set is \textbf{waiting for an event} that can be caused only by \textbf{another thread in the set}.
+        \item The following is an example of how deadlock can occur:
+        \begin{enumerate}
+            \item Process one acquires a lock on resource 1.
+            \item Process two acquires a lock on resource 2.
+            \item Process wants to acquire a lock on resource two, but must block until it is available.
+            \item Process two wants to acquire a lock on resource one, but must block until it is available.
+            \item Both processes have entered deadlock.
+        \end{enumerate}
+        \item A set of \textbf{threads} are said to be \textbf{in a livelocked state} when \textbf{every thread} in the set is \textbf{waiting for an event} that can be caused only by \textbf{another thread in the set}. Livelock occurs when a the thread that the others are waiting for \textbf{continuously attempts an action that fails}.
+    \end{itemize}
+
+    \subsection*{Deadlock Conditions}
+    \begin{itemize}
+        \item \textbf{Deadlock} can arise if \textbf{four conditions} occur at the same time:
+        \begin{enumerate}
+            \item \textbf{Mutual exclusion}: Only one process at a time an use the resource.
+            \item \textbf{Hold and wait}: A process holding at least one resource is waiting to acquire additional resources held by other processes.
+            \item \textbf{No preemption}: A resource can be released only voluntarily by the process holding it.
+            \item \textbf{Circular wait}: There exists a set of waiting processes such that $P_0$ is waiting for $P_1$, and $P_1$ is waiting for $P_2$ and ... and $P_n$ is waiting for $P_0$.
+        \end{enumerate}
+        \item These conditions do \textbf{not guarantee deadlock} will occur, they can \textbf{potentially cause deadlock}.
+    \end{itemize}
+
+    \subsection*{Resource-Allocation Graphs}
+    \begin{itemize}
+        \item A \textbf{resource-allocation graph} is a \textbf{directed graph}, $G=(V,E)$.
+        \item $V$ is partitioned into two sets:
+        \begin{enumerate}
+            \item $P=\{P_1, P_2, ..., P_n\}$ consisting of all of the processes in the system.
+            \item $R=\{R_1, R_2, ..., R_m\}$ consisting of all of the resource types in the system.
+        \end{enumerate}
+        \item $E$ consists of two types of edges:
+        \begin{enumerate}
+            \item A \textbf{request edge} is a directed edge of the form $P_i \rightarrow R_j$.
+            \item An \textbf{assignment edge} is a directed edge of the form $R_j \rightarrow P_i$.
+        \end{enumerate}
+        \item If $G$ has a \textbf{cycle}, \textbf{deadlock} may exist.
+        \item If $G$ has \textbf{no cycles}, \textbf{deadlock} does not exist.
+    \end{itemize}
+
+    \subsection*{Methods for Handling Deadlock}
+    \begin{itemize}
+        \item One way to handle deadlocks is to ensure the system will never enter a deadlocked state (prevention / avoidence).
+        \item Another way to handle deadlocks is to allow the system to enter a deadlocked state, and then recover.
+        \item The last way is to ignore the problem, and pretend that deadlocks never occur in the system (this option is used by most systems).
+    \end{itemize}
+
+\end{document}
