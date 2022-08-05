@@ -106,4 +106,80 @@
         \item The last way is to ignore the problem, and pretend that deadlocks never occur in the system (this option is used by most systems).
     \end{itemize}
 
+    \subsection*{Deadlock Prevention}
+    \begin{itemize}
+        \item To prevent \textbf{deadlock}, we must \textbf{restrain} the ways \textbf{requests can be made}.
+        \item To prevent deadlock, we must prevent at-least one of the conditions required for deadlock. We can do the following:
+        \begin{enumerate}
+            \item \textbf{Mutual Exclusion} | Only one thread can request a resource at any given time.
+            \begin{itemize}
+                \item Not realistic, this would put locks on shared resources which is inefficient.
+            \end{itemize}
+            \item \textbf{Hold and Wait} | Must guarantee that whenever a thread requests a resource, it does not hold any other resources. Either we can have the thread request all of it's resources at the start of execution, or only when it does not hold any other resources.
+            \begin{itemize}
+                \item Not realistic, it is inefficient, and often difficult to predict the exact amount of resources required.
+            \end{itemize}
+            \item \textbf{No Preemption} | If a thread is holding some resources, and requests another resource that cannot be immediately allocated, then all resources currently being held are released. The process is then restarted when the resoruces it requested become available.
+            \begin{itemize}
+                \item Not reasitic, this cannot be used for resources like semaphores, and mutexes.
+            \end{itemize}
+            \item \textbf{Circular Wait} | Impose a total ordering of all resource types, and require that each thread requests resources in an increasing order of enumeration.
+            \begin{itemize}
+                \item This is realistic, all we have to enforce is the order threads allocate resources.
+            \end{itemize}
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{Deadlock Avoidance}
+    \begin{itemize}
+        \item To avoid \textbf{deadlocks}, we can give the operating system \textbf{information} about the \textbf{resources a thread intends to request}.
+        \item The simplest and most useful model requires that \textbf{each process} declares the \textbf{maximum number} of \textbf{resource}s of each type that \textbf{it may need}.
+        \item The \textbf{deadlock-avoidance algorithm} dynamically examines the \textbf{resource-allocation state} to ensure that \textbf{circular-wait conditions do not happen}.
+        \item \textbf{Resource-allocation state} is defined by the \textbf{number of available and allocated resources}, as well as the \textbf{maximum demands of the processes}.
+    \end{itemize}
+
+    \subsection*{Safe State}
+    \begin{itemize}
+        \item When a \textbf{process requests} an \textbf{available resource}, the system must decided if \textbf{immediate allocation} leaves the system in a \textbf{safe state}.
+        \item This happens as follows:
+        \begin{enumerate}
+            \item If $P_i$ resource needs are not immediately available, the $P_i$ can wait until all of the resources of $P_{i-1}$ are deallocatd.
+            \item When they are available, $P_i$ receives them, performs it's required tasks, and deallocates them.
+            \item When $P_i$ deallocates the resources, $P_{i+1}$ can allocate them.
+        \end{enumerate}
+        \item If the system is in a \textbf{safe state}, there are no deadlocks.
+        \item If the system is in an \textbf{unsafe state}, there is a possibility that deadlocks can occur.
+        \item \textbf{Avoidance} ensures that a system \textbf{never enteres an unsafe state.}
+    \end{itemize}
+
+    \subsection*{Deadlock-Avoidance Algorithms}
+    \begin{itemize}
+        \item There are two main \textbf{deadlock-avoidance algorithms}:
+        \begin{enumerate}
+            \item \textbf{Resource-Allocation Graphs} | Use when resources have a single instance.
+            \item \textbf{Banker's Algorithm} | Used when resources have multiple instances.
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{Deadlock Recovery | Process Termination}
+    \begin{itemize}
+        \item One way to \textbf{recover from deadlock} is to \textbf{abort all deadlocked processes}.
+        \item The processes should be \textbf{aborted one at a time} until the \textbf{deadlock cycle is eliminated}.
+        \item Things to consider when choosing the order of aborting processes:
+        \begin{enumerate}
+            \item Process priority.
+            \item The amount of time the process has been running, and how much longer it has to run until it is completed.
+            \item Resources the process has allocated.
+            \item Resource the process is attempting to allocate.
+            \item Is the process interactive or batch.
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{Deadlock Recovery | Resource Preemption}
+    \begin{itemize}
+        \item Another way to \textbf{recover from a deadlock} is to \textbf{select a victim} that will minimize the \textbf{cost}, and rollback that process to a \textbf{safe state}.
+        \item This may cause \textbf{starvation} if the same process is always selected.
+        \item This also requires a lot overhead, you have to maintain previous states of all processes.
+    \end{itemize}
+
 \end{document}
