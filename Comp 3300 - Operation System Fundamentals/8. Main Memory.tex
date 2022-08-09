@@ -133,7 +133,31 @@
         \item When using \textbf{virtual memory}, you \textbf{do not need to load all of the program} into memory at the \textbf{start}, they can be loaded later on.
         \begin{itemize}
             \item This is known as \textbf{demand paging}; pages are \textbf{loaded into the main memory} when they are first used.
+            \item If the \textbf{primary memory is full} when a \textbf{page} needs to be \textbf{loaded}, the operation system will perform a \textbf{swap}; the operating system will save a block already in ram, load the one currently needed, and when it is done the original one will be place back into memory. \textbf{Secondary memory} usually has a \textbf{swap partition} for this scenerio.
+            \item There are different swap replacement policies: first in first out, least recently used, least frequently used, etc. 
         \end{itemize}
     \end{itemize}
+
+    \subsection*{Shared Paging}
+    \begin{itemize}
+        \item \textbf{Common library routines} can be shared throughout \textbf{all processes} running on the operating system.
+        \item This can be acheived with \textbf{shared pages}.
+    \end{itemize}
+
+    \subsection*{Copy on Write (COW)}
+    \begin{itemize}
+        \item All \textbf{parent pages} are initallly marked as \textbf{shared}.
+        \item When \textbf{data} in any of the \textbf{shared pages change} (by the parent or any child), the \textbf{OS intercepts} and makes a \textbf{copy of the change}.
+        \item The \textbf{parent and all children} will have the \textbf{same copy of unmodified pages}.
+        \item This is done to save memory.
+    \end{itemize}
+
+    \subsection*{Address Translation Scheme}
+    \begin{abstract}
+        \item The \textbf{page table} consits of four columns: block, page frame, present bit, dirty bit.
+        \item The \textbf{page table} has a \textbf{page-table base register (PTBR)}.
+        \item Each \textbf{virtual address} is composed of \textbf{a page number, and an offset}.
+        \item The page number refers to the virtual page number, and the offset is the number of bytes from the start of the page that the data resides.
+    \end{abstract}
 
 \end{document}
