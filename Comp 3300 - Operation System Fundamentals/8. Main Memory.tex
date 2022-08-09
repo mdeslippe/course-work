@@ -158,6 +158,36 @@
         \item The \textbf{page table} has a \textbf{page-table base register (PTBR)}.
         \item Each \textbf{virtual address} is composed of \textbf{a page number, and an offset}.
         \item The page number refers to the virtual page number, and the offset is the number of bytes from the start of the page that the data resides.
+        \item On \textbf{32-bit systems} the \textbf{maximum process size is 4GB} ($2^{32}$).
     \end{abstract}
+
+    \subsection*{Hierarchical Page Tables}
+    \begin{itemize}
+        \item \textbf{Hierarchical page tables} divide addresses into three sections:
+        \begin{enumerate}
+            \item \textbf{The directory (Dir)} | First 10 bits.
+            \item \textbf{The Table} | Next 10 bits.
+            \item \textbf{The Offset} | Last 12 bits.
+        \end{enumerate}
+        \item The directory refers to a table that references other page tables. The table section of the address refers to the index of the referenced page table that we are interested in, the offset is the number of bytes from the start of the of the page.
+        \item[] \includegraphics[width=\textwidth - 25pt]{images/Hierarchial-Page-Table.png}
+        \item \textbf{Hierarchical page tables} allow us to store page tables in memory that is \textbf{not contiguous}. As page tables can get very large (32-bit systems need a 4MB page table per process). 
+        \item You can continue to add \textbf{more levels} to the hierachy for systems with more memory (eg 64-bit).
+    \end{itemize}
+
+    \subsection*{Hash Page Tables}
+    \begin{itemize}
+        \item An efficient way to \textbf{map addresses} is with \textbf{hashed page tables}.
+        \item You use a hashtable with a linkedlist to map values to adresses.
+        \item[] \includegraphics[width=\textwidth - 25pt]{images/Hash-Page-Table.png}
+    \end{itemize}
+
+    \subsection*{Inverted Page Tables}
+    \begin{itemize}
+        \item A \textbf{modern} way to implement page tables is with \textbf{inverted page tables}.
+        \item An \textbf{Inverted page table} is a page table that is shared with \textbf{all processes}, with addresses composed of process id's, block number, and offset.
+        \item This \textbf{solves the problem} of \textbf{wasting a lot of memory} creating \textbf{page tables} for each process.
+        \item[] \includegraphics[width=\textwidth - 25pt]{images/Inverted-Page-Table.png}
+    \end{itemize}
 
 \end{document}
