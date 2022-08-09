@@ -121,11 +121,102 @@
         \item With \textbf{memory switching}, the packets are copied to the \textbf{system's memory}. This limits the switching rate to the \textbf{memories bandwidth}. This type of switching is directly under the control of the \textbf{CPU}.
         \item With \textbf{bus switching}, the packets are delivered from the \textbf{input port's memory}, to the \textbf{output port's memory} directly. The switching speed is limited to the \textbf{speed of the bus} (which is much faster than memory switching). 
         \item With \textbf{interconnnection network switching}, is similar to the bus, except we can \textbf{transfer several packets in parallel}.
+        \item We can have \textbf{seveal planes} of \textbf{interconnection network switching} that run in parallel to allow for scaling.
     \end{itemize}
 
     \subsection*{Input Port Functions}
     \begin{itemize}
+        \item There are three functions of an \textbf{input port}:
+        \begin{enumerate}
+            \item Receives the bits.
+            \item Interperates the bits.
+            \item Forward the packet to the switching fabric.
+        \end{enumerate}
+        \item There are two types of \textbf{forwarding} in \textbf{decentralized switching}:
+        \begin{enumerate}
+            \item \textbf{Destination-based forwarding} | Packets are forwarded based on their destination IP Address.
+            \item \textbf{Generalized forwarding} | Packets are forwarded based on any set of header field values.
+        \end{enumerate}
+        \item If the \textbf{switching fabric} is \textbf{slower} than the \textbf{input ports conbined}, then \textbf{queueing may occur} at the input queues. The queueing may lead to \textbf{delays, and packet loss}.
+        \item \textbf{Head-of-Line (HOL) blocking} is when the \textbf{packet} at the \textbf{front of the queue} prevents the \textbf{queue from moving} (due to congestion).
+    \end{itemize}
+
+    \subsection*{Output Port Functions}
+    \begin{itemize}
+        \item There are three functions of an \textbf{output port}:
+        \begin{enumerate}
+            \item Receive the packet from the switching fabric.
+            \item Send the bits.
+            \item Send a line termination.
+        \end{enumerate}
+        \item \textbf{Buffering} is required when \textbf{packets} arrive from the \textbf{switching fabric} faster than the \textbf{link's transmission rate}.
+        \item The \textbf{drop policy} is a policy to determine \textbf{which packets to drop} if the \textbf{buffer is full}.
+        \item \textbf{Congestion occurs when the output link is slower than the output ports}.
+    \end{itemize}
+
+    \subsection*{Determining Buffer Sizes}
+    \begin{itemize}
+        \item The \textbf{RFC 3439} rule of thumb is that the \textbf{average buffer size} should be equal to $\text{RTT}\times\text{LinkCapacity}$.
+        \item There is such a thing as \textbf{too much buffering}; this can increase delays (particularly in home routers).
+        \begin{itemize}
+            \item \textbf{Long RTTs} lead to \textbf{poor performance} in \textbf{real-time allpcations}.
+        \end{itemize}
+        \item When the \textbf{buffer is full}, there are two ways to determine the \textbf{packets to drop} when more arrive:
+        \begin{enumerate}
+            \item \textbf{Tail drop} involves dropping the arriving packets.
+            \item \textbf{Priority drop} involves dropping packets on a priority basis.
+        \end{enumerate}
         \item 
+    \end{itemize}
+
+    \subsection*{Packet Scheduling}
+    \begin{itemize}
+        \item There are several ways to \textbf{determine the way packets are scheduled}:
+        \begin{enumerate}
+            \item \textbf{First Come First Serve (FCFS) Scheduling} schedules packets in the \textbf{order they arrive}.
+            \item \textbf{Priority Scheduling} schedules packets \textbf{based on their classification} (classifications can be determined by header fields); all higher classified queues get send first.
+            \item \textbf{Round Robin (RR) Scheduling} schedules packets \textbf{based on their classification}, but cycles between the different classification queues.
+            \item \textbf{Weighted Fair Queueing (WFQ)} is a \textbf{round robin} scheduling algorithm, that assigns each class a weight, and the weight determines the amount of time is spent on each queue.
+        \end{enumerate} 
+    \end{itemize}
+
+    \section*{\centering{The Internet Protocol}}
+
+    \subsection*{Internet Protocol Datagrams}
+    \begin{itemize}
+        \item[] \begin{center} \includegraphics*[]{images/Internet-Protocol-Datagram.png} \end{center}
+        \item The \textbf{maximum length} of a \textbf{datagram is 65536 bytes}. However the typical size is around \textbf{1500 bytes or less}.
+    \end{itemize}
+
+    \subsection*{IP Address}
+    \begin{itemize}
+        \item An \textbf{IP Address} is a \textbf{32-bit identifier} associate with each \textbf{network host} or \textbf{router interface}.
+        \begin{itemize}
+            \item An \textbf{interface} is a \textbf{connection} between a \textbf{host/router} and a \textbf{physical link}.
+            \item \textbf{Routers} typically have multiple interfaces, and \textbf{hosts} typically have one or two interfaces.
+        \end{itemize}
+    \end{itemize}
+
+    \subsection*{Subnetworks (Subnets)}
+    \begin{itemize}
+        \item A \textbf{subnetwork} is a \textbf{local partition} of an \textbf{Internet Protocol network}.
+        \item \textbf{Subnets} are typically defined as a group of \textbf{device interfaces} that can \textbf{physically reach each other} without \textbf{passinging through an intervening router}.
+        \item \textbf{Devices} in the \textbf{same subnet} have \textbf{common high order bits} in their \textbf{IP Addresses}, and the \textbf{low order bits differ between hosts}.
+        \begin{itemize}
+            \item For example, the following addresses are an example of a subnet: 1.0.23.1, 1.0.23.5, 1.0.23.10
+        \end{itemize}
+        \item A \textbf{subnet mask} is a \textbf{32-bit number} created by setting \textbf{host bits to 0}, and \textbf{network bits to 1}. All bits set to 0 can change, and the addresses will still be a part of the subnet.
+        \begin{itemize}
+            \item There is a short hand for this, you put a slash and then the number of bits that are set to 1 starting from the left. For example /24 = 11111111.11111111.11111111.00000000
+            \item You can also express subnet masks as their decimal interpretation: \newline 11111111.11111111.11111111.00000000 = 255.255.255.0
+        \end{itemize}
+        \item There are \textbf{three main classes} of networks:
+        \begin{enumerate}
+            \item \textbf{Class A} networks have a subnet mask of \textbf{255.0.0.0}.
+            \item \textbf{Class B} networks have a subnet mask of \textbf{255.255.0.0}.
+            \item \textbf{Class C} networks have a subnet mask of \textbf{255.255.255.0}.
+        \end{enumerate}
+        \item There is also a \textbf{Class D and Class E}, but they are reserved for special purposes, and research. They are not available for network hosts.
     \end{itemize}
 
 \end{document}
