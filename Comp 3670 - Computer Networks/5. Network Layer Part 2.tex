@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{longtable}
+\usepackage[top=1in, bottom=0.25in, left=1.25in, right=1.25in,includefoot,heightrounded]{geometry}
+\usepackage{indentfirst}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx,tikz}
+\usepackage{hyperref}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[document]{ragged2e}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{flowchart}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usetikzlibrary{arrows}
+
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{decision} = [diamond, minimum width=4cm, minimum height=0.5cm, text centered, draw=black, fill=green!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2cm, text width=4cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Myles Deslippe}
+\rhead{Comp 3670 | Computer Networks}
+\cfoot{\thepage}
+
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+\lstset{inputencoding=ansinew}
+\lstset{breaklines=true} 
+
+\begin{document}
+
+    \section*{The Control Plane}
+
+    \subsection*{Network-Layer Functions}
+    \begin{itemize}
+        \item The \textbf{data plane} is reponsible for \textbf{forwarding packets} (moving them from the router's input, to the router's output).
+        \item The \textbf{control plane} is responsible for \textbf{determining the route} taken by \textbf{packets} from \textbf{source to destination}. 
+    \end{itemize}
+
+    \subsection*{Structuring the Control Plane}
+    \begin{itemize}
+        \item There are two ways to \textbf{structure the network control plane}:
+        \begin{enumerate}
+            \item \textbf{Per-router control (traditional)} | Each \textbf{router} has a \textbf{routing algorithm} that is used to determine \textbf{where to route the packet}.
+            \item \textbf{Logically centralized control (software defined networking)} | Remote controller computes, and \textbf{installs a fordwarding table} in the \textbf{routers}.
+        \end{enumerate}
+    \end{itemize}
+
+    \section*{Routing Protocols}
+    
+    \subsection*{Routing Protocols}
+    \begin{itemize}
+        \item The \textbf{goal} of a \textbf{routing protocol} is to \textbf{determine "good" routes} from the \textbf{sending host} to the \textbf{receiving host} through a network of routers.
+        \item In order to acheive that goal, \textbf{each router} needs to know \textbf{what it is directly conntected to}, and what \textbf{those routers are connected to}.
+        \item A \textbf{path} is a sequence of \textbf{routers} that packets must \textbf{traverse} from the \textbf{inital sending host} to the \textbf{final destination host}.
+        \item A \textbf{"good" route} is a \textbf{route} that is the \textbf{fastest, least congested, and of least "cost"}.
+    \end{itemize}
+
+    \subsection*{Routing Graphs}
+    \begin{itemize}
+        \item A \textbf{routing graph} is a tuple $G=(N, E)$ where $N$ is a set of routers $\{n_1, n_2, \cdots, n_j\}$ and $E$ is a set of links $\{e_1, e_2, \cdots, e_k\}$.
+        \item The \textbf{cost} of a \textbf{link} $l\in{E}$ is defined as a function $C: E\rightarrow\mathbb{R}\cup\{\infty\}$, denoted by $C_{a,b}$ where $a,b\in{N}$ are the routers that the link $l$ is contected to.
+    \end{itemize}
+
+    \subsection*{Routing Algorithms}
+    \begin{itemize}
+        \item A \textbf{routing algorithm} is an \textbf{algorithm} that is used to determine the \textbf{a "good" path} that a \textbf{packet} should take to get from \textbf{a sending host} to a \textbf{receiving host}.
+        \item \textbf{Route classificatons}:
+        \begin{enumerate}
+            \item \textbf{Static Routes} | Static routes are routes that do \textbf{do not change}, or that \textbf{change very slowly over time}.
+            \item \textbf{Dynamic Routes} | Dynamic routers are routes that \textbf{change quickly over time}, or have a \textbf{quickly chaning cost}.
+        \end{enumerate}
+        \item \textbf{Routing algorithm classifications}:
+        \begin{enumerate}
+            \item \textbf{Link State Algorithms (Global)} | Link state algorithms are used when \textbf{all routers} have a \textbf{complete topology of the network, and know the cost of each route}.
+            \begin{itemize}
+                \item An example of link state algorithms is Dijkstra's link-state routing algorithm.
+            \end{itemize}
+            \item \textbf{Distance Vector Algorithms (decentralized)} | Distance vector algorithms are used routers initially \textbf{only know the link cost to attached neighbors}. This algorithm is \textbf{iterative}, and information needs to be \textbf{exchanged with neighboring routers}.
+            \begin{itemize}
+                \item An example of a distance vector algorithm is 
+            \end{itemize}
+        \end{enumerate}
+    \end{itemize}
+
+\end{document}
