@@ -197,6 +197,8 @@
         \end{itemize}
     \end{itemize}
 
+    \section*{\centering{Subnetworks}}
+
     \subsection*{Subnetworks (Subnets)}
     \begin{itemize}
         \item A \textbf{subnetwork} is a \textbf{local partition} of an \textbf{Internet Protocol network}.
@@ -217,6 +219,109 @@
             \item \textbf{Class C} networks have a subnet mask of \textbf{255.255.255.0}.
         \end{enumerate}
         \item There is also a \textbf{Class D and Class E}, but they are reserved for special purposes, and research. They are not available for network hosts.
+    \end{itemize}
+
+    \subsection*{Gateways}
+    \begin{itemize}
+        \item Each \textbf{inteface} on a \textbf{router} has a \textbf{unique IP Address}.
+        \item \textbf{Routers} that provide an \textbf{interface} between \textbf{two distinct subnetworks} are known as a \textbf{gateway}.
+        \begin{itemize}
+            \item Gateways are a router that interfaces multiple subnets, hence why each inteface gets a unique IP Address that must be within the subnet it is interfacing with.
+            \item When at least two gateways are directly connected, there is a new subnet between them.
+        \end{itemize}
+    \end{itemize}
+
+    \subsection*{IP Adressing | CIDR}
+    \begin{itemize}
+        \item \textbf{Classless InterDomain Routing (CIDR)} (aka supernetting) is a \textbf{method of assigning Internet Protocol (IP) adresses}.
+        \item \textbf{CIDR} consists of the following address format: \textbf{a.b.c.d/x} where a, b, c, d are n-bit numbers numbers, and x is the number of bits in the subnet portion of the address.
+        \begin{itemize}
+            \item An example would be \textbf{200.23.16.0/23}, the first 23 bits identify the subnetwork, and the last 9 bits identify the host within the subnetwork.
+        \end{itemize}
+        \item There are to ways a \textbf{host} gets an \textbf{IP Address assigned}:
+        \begin{enumerate}
+            \item \textbf{A Hard-coded address} that is assigned by a sysadmin in a configuration file.
+            \item \textbf{The Dynamic Host Configuration Protocol (DHCP)} which allows devices the get IP Adress assignments dynamically from a server.
+        \end{enumerate} 
+        \item DHCP is particularly useful for devices connecting to routers over \textbf{Wi-Fi}. 
+    \end{itemize}
+    
+    \subsection*{Dynamic Host Configuration Protocol}
+    \begin{itemize}
+        \item The goal of \textbf{DHCP} is to allow \textbf{hosts} to \textbf{dynamically obtain IP Adresses} from a \textbf{network server} when it "joins" the network.
+        \item \textbf{DHCP "leases"} out \textbf{IP Adresses} to devices on the \textbf{network} for a \textbf{specific period of time}. This allows for addresses to be \textbf{reused} if a device leaves the network.
+        \item The process is \textbf{seamless} so hosts can easily come and go.
+        \item The following is how a device \textbf{typically obtains an IP Address over DHCP}:
+        \begin{enumerate}
+            \item The \textbf{host} broadcasts a \textbf{DHCP discover} message (only if the host does not know the address of the DHCP server).
+            \item The \textbf{DHCP server} responds with a \textbf{DHCP offer} message (only if the host sends a discover message).
+            \item The \textbf{host} requests the \textbf{IP Address} that the \textbf{server} offered with a \textbf{DHCP request} message.
+            \item The \textbf{DHCP server} sends a \textbf{DHCP ack} message to the \textbf{address} that has been \textbf{leased to the host}.
+        \end{enumerate}
+        \item Typically, the \textbf{DHCP server} will be \textbf{co-located in the router}, serving all \textbf{subnets} the \textbf{router is attached to}.
+        \item When \textbf{DHCP} messages are sent, the \textbf{server} typically uses port \textbf{67}, and the host typically uses port \textbf{68}.
+        \item[] \includegraphics*[width=\textwidth - 25pt]{images/DHCP-Request.PNG}
+        \item \textbf{DHCP} can return more than just an \textbf{IP Address}, it can also return:
+        \begin{enumerate}
+            \item The \textbf{address} of the \textbf{first-hop} router for a \textbf{client}.
+            \item The \textbf{name} and \textbf{IP} of a \textbf{DNS server}.
+            \item The \textbf{network mask} (including network vs host portion of an address).
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{Internet Service Providers}
+    \begin{itemize}
+        \item The \textbf{Internet Corporation for Assigned Names and Numbers (ICANN)} is responsible for \textbf{assigning IP address blocks} to \textbf{Internet Service Providers (ISPs)}.
+        \item The \textbf{ISPs} can then assign them to their clients.
+    \end{itemize}
+
+    \subsection*{Network Address Translation (NAT)}
+    \begin{itemize}
+        \item All \textbf{devices} in a \textbf{local network} share \textbf{one public IPv4 address} as far as the outside world is concerned (the address of the first-hop router).
+        \item \textbf{Datagrams} with a \textbf{source} or \textbf{destination} within this network have \textbf{10.0.0.0/24} or \textbf{192.168.0.0/24} as the \textbf{source and destination address} (usually).
+        \item All \textbf{datagrams} that are \textbf{leaaving the local network} have the \textbf{same source NAT IP Address}, but different \textbf{source port numbers}.
+        \item All \textbf{devices} in the \textbf{local network} have a \textbf{private 32-bit IP Address} that can only be used in the \textbf{local network}.
+        \item The advantage that is provided by allowing \textbf{one public IP Address} to map to \textbf{several private IP Addresses} is:
+        \begin{enumerate}
+            \item The ISP only needs to assigne one address to the customer for all devices on the local network.
+            \item You can change the address of hosts in a local network without notifying the outside world.
+            \item You can change ISP providers without changing addresses of devices in the local network.
+            \item Enhanced security; devices inside the local network are not directly addressable or visible by the outside world, instead they are proxied.
+        \end{enumerate}
+        \item In 2011, ICANN allocated the last remaining available IPv4 addresses to an ISP, public and private IP Adresses allow us to remain on IPv4 for longer, because the same addresses are reused in several local networks.
+    \end{itemize}
+
+    \subsection*{NAT Implementation}
+    \begin{itemize}
+        \item The NAT router must transparently do the following:
+        \begin{enumerate}
+            \item \textbf{Outgoing Datagrams} | The source IP and port of every datagram must be replaced by the NAT IP and a new port which identifies the host in the local network. Remote hosts will respond using the new NAT IP address and port. The mapping will be placed in a NAT table.
+            \item \textbf{Incoming Datagrams} | The destination IP and port of every datagram must be replaced with the with the original local IP and port, which were previously stored in a NAT table.
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{The NAT Controversy}
+    \begin{itemize}
+        \item Nat has been controversial:
+        \begin{itemize}
+            \item \textbf{Routers} should only process \textbf{up to layer 3} (ports are layer 4).
+            \item The \textbf{address shortage} should be solved by \textbf{IPv6}, not \textbf{NAT}.
+            \item It \textbf{Violates} the \textbf{end-to-end argument} (port \# manipulation).
+            \item It doesnt allow \textbf{clients} to \textbf{connect} to \textbf{servers behind NAT}.
+        \end{itemize}
+        \item Even with all of th controversy, NAT is here to stay. It is extensively used in home and institutional networks, and 4G/5G cellular networks.
+    \end{itemize}
+
+    \section*{\centering{Internet Protocol version 6 (IPv6)}}
+    
+    \subsection*{IPv6 Format}
+    \begin{itemize}
+        \item The \textbf{initial motivation} was the fact that \textbf{IPv4 addresses} would be (at the time they were not completely allocated, they are now) \textbf{completely allocated}.
+        \item Unlike IPv4, the IPv6 format does not have \textbf{a checksum, options, or fragmentation}.
+        \item A major problem is that not all routers can be upgraded simultaneously.
+        \item To allow \textbf{routers} that \textbf{only support IPv4, to handle IPv6 datagrams}, we can use \textbf{tunneling}: The \textbf{IPv6 datagram} is carried as a \textbf{payload} in an \textbf{IPv4 datagram}. This is essentially, a packet within a packet.
+        \item Tunneling is used extensively in other contexts such as 4G/5G.
+        \item[] \includegraphics*[width=\textwidth - 25pt]{images/IPv6-Format.PNG}
     \end{itemize}
 
 \end{document}
