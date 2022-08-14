@@ -1,0 +1,185 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{longtable}
+\usepackage[top=1in, bottom=0.25in, left=1.25in, right=1.25in,includefoot,heightrounded]{geometry}
+\usepackage{indentfirst}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx,tikz}
+\usepackage{hyperref}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[document]{ragged2e}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{flowchart}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usetikzlibrary{arrows}
+
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{decision} = [diamond, minimum width=4cm, minimum height=0.5cm, text centered, draw=black, fill=green!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2cm, text width=4cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Myles Deslippe}
+\rhead{Comp 3670 | Computer Networks}
+\cfoot{\thepage}
+
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+\lstset{inputencoding=ansinew}
+\lstset{breaklines=true} 
+
+\begin{document}
+
+    \section*{\centering{The Link Layer}}
+
+    \subsection*{Introduction to the Link Layer}
+    \begin{itemize}
+        \item The \textbf{link layer} is responsible for \textbf{transferring datagrams} from one \textbf{node} to another \textbf{physically adjacent} node over a \textbf{link}.
+        \item When working at the \textbf{link layer}, we refer to \textbf{hosts and routers} as \textbf{nodes}.
+        \item When working at the \textbf{link layer}, we refer to \textbf{communication channels} that \textbf{connect adjacent nodes} as \textbf{links}.
+        \begin{itemize}
+            \item These links can be wired and wireless.
+        \end{itemize}
+        \item When working at the \textbf{link layer}, \textbf{frames} are the \textbf{unit of data} we are interested in \textbf{transferring}; they \textbf{encapsulate packets}.
+        \item Different \textbf{types of links} have \textbf{different transfer protocols}. Different protocols provice different services (eg one may be reliable, the other may not be reliable).
+    \end{itemize}
+
+    \subsection*{Link Layer Services}
+    \begin{itemize}
+        \item The \textbf{framing service} is responsible for \textbf{encapsulating datagrams} into frames (adding headers, etc). If there is a shared medium, the channel access needs to be specified. MAC addresses are used in frame headers to identify devices.
+        \item The \textbf{reliable deliver service} is responsible for ensuring \textbf{every frame is correctly delivered}.
+        \item The \textbf{flow control service} is responsible for \textbf{pacing sending and receiving rates}.
+        \item The \textbf{error detection service} is responsible for \textbf{detecting errors} caused by frame drops, noise, signal attenuation, etc.
+        \item The \textbf{error correction service} is responsible for \textbf{identifying incorrect bits, and correcting them} without the need for retransmission.
+        \item With a \textbf{half-duplex service} both nodes can transmit and receive, but not both operations at the same time.
+        \item With a \textbf{full-duplex service} both nodes can transmit and receive at the same time.
+    \end{itemize}
+
+    \subsection*{Link Layer Implementation}
+    \begin{itemize}
+        \item The \textbf{link layer} is \textbf{implemented} in \textbf{each and every node}.
+        \item \textbf{Implementations} are located in the node's \textbf{Network Interface Card (NIC)}. These cards implement the link and physical layer.
+        \item The \textbf{implementations} are \textbf{connected} to the \textbf{system's bus} which allow for data transfer. And a combination of \textbf{hardware, software, and firmware control the NIC}.
+    \end{itemize}
+
+    \subsection*{Error Detection}
+    \begin{itemize}
+        \item An \textbf{Error Correction and Detection (EDC) bit} is used.
+        \item If an \textbf{error is detected}, the device will either \textbf{correct the error}, or request a \textbf{retransmission}.
+        \item \textbf{Error detection} is not 100\% reliable, but it is still useful. Larger EDC fields result in better detection and correction.
+        \item \textbf{Parity checking} is also used.
+        \item \textbf{Cyclic Redundancy Check (CRC)} is a good way of \textbf{detecting errors}.
+    \end{itemize}
+
+    \subsection*{Multiple Access Protocols}
+    \begin{itemize}
+        \item There are two types of links:
+        \begin{enumerate}
+            \item \textbf{Point-To-Point} | Two devices connected directly by a link (for example ethernet between two devices).
+            \item \textbf{Broadcast} | Several devices connected by a shared medium that can communicate (for example a shared wire, a shared radio, a switch).
+            \item When \textbf{two or more} nodes \textbf{simultaneously transmit}, \textbf{interference can occur}.
+            \item \textbf{Collision occurs} if a \textbf{single node} receives \textbf{two or more signals at the same time}.
+            \item There are \textbf{protocols} to \textbf{avoid interference and collision}; they involve a \textbf{distributed algorithm} that determins \textbf{how nodes share a channel}.
+            \item \textbf{Communication} about \textbf{how to use a channel} must be \textbf{on the channel}, out-of-band coordination is not allowed in these protocols.
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{The Media Access Control (MAC) Protocol}
+    \begin{itemize}
+        \item In the \textbf{MAC protocol}, there are \textbf{three classifications of channel access control}:
+        \begin{enumerate}
+            \item \textbf{Channel Partitioning} | Channels are divided into smaller pieces (time slots, requency, code, etc), and pieces of the channel are allocated to nodes for exclusive use.
+            \item \textbf{Random Access} | Channels are not divided, and allow collision, and provides a way to recover from collisions.
+            \item \textbf{Taking Turns} | Nodes take turns using the channel, but nodes with more to send can take longer turns.
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{MAC Channel Partitioning Protocols}
+    \begin{itemize}
+        \item \textbf{Time Division Multiple Access (TDMA)} gives nodes access to the channel in \textbf{rounds}, each node gets a \textbf{fixed length slot} (length = packet transmission time) in each round.
+        \begin{itemize}
+            \item Unused slots go idle.
+        \end{itemize}
+        \item \textbf{Frequency Division Multiple Access (FDMA)} divides the channel into \textbf{frequency bands}, and each nodes gets a \textbf{fixed frequency band}.
+        \begin{itemize}
+            \item Unused frequency bands go idle.
+        \end{itemize}
+    \end{itemize}
+
+    \subsection*{MAC Channel Random Access Protocols}
+    \begin{itemize}
+        \item When a \textbf{node has a packet to send}, it transmits to the \textbf{full channel} at a data rate $R$ \textbf{without any prior coordination}.
+        \item If \textbf{two nodes transmit} at the \textbf{same time}, \textbf{collision occurs}.
+        \item The \textbf{Random Access protocol} specifies how to \textbf{detect and recover} from \textbf{collisions}.
+        \item Exampels of \textbf{Random Access protocols}: 
+        \begin{enumerate}
+            \item \textbf{ALOHA}:
+            \begin{itemize}
+                \item Assumptions: 
+                \begin{enumerate}
+                    \item All frames are the same size.
+                    \item Time is divided into equal size transmission slots.
+                    \item Nodes can only start transmitting at a slot beginning.
+                    \item The nodes are all time-synchronized.
+                    \item If two or more nodes transmit in a slot, all nodes detect the collision.
+                \end{enumerate}
+                \item When a node obtains a fresh frame, it will transmit it in the next slot, if collision occurs, retransmit, otherwise send the next frame.
+                \item Suppose N nodes with many frames to send, each transmit in a slot with probability $P$, each time a node attempts to transmit, 37\% ($\frac{100}{e}$\%) of the time, nodes will be able to transmit without collision.
+                \item Pros:
+                \begin{enumerate}
+                    \item Single active node can continuously transmit at full rate.
+                    \item Highly decentralized.
+                    \item Simple.
+                \end{enumerate}
+                \item Cons:
+                \begin{enumerate}
+                    \item Collision occurs, wasting time slots.
+                    \item Some slots are idle.
+                    \item Nodes may be able to detect collision in lass than time to transmit a packet.
+                    \item Clock synchronization is difficult.
+                \end{enumerate}
+            \end{itemize}
+            \item \textbf{Pure ALOHA}:
+            \begin{itemize}
+                \item \textbf{Pure ALOHA} is \textbf{ALOHA without the timeslots}. When a frame first arrives, nodes can attempt to transmit it immediately.
+                \item The probability for collision increases with no synchronization.
+                \item Suppose N nodes with many frames to send, each transmit with probability $P$, each time a node attempts to transmit, 18\% ($\frac{100}{2e}$\%) of the time, nodes will be able to transmit without collision.
+            \end{itemize}
+            \item \textbf{Simple Carrier Sense Multiple Access (Simple CSMA)}:
+            \begin{itemize}
+                \item CSMA requires nodes to listen before they transmit. If the channel is idle, they can transmit the entire frame. If the channel is busy, they can defer the transmission.
+            \end{itemize}
+            \item \textbf{CSMA/CD}:
+            \begin{itemize}
+                \item \textbf{CSMA/CD} is \textbf{Simple CSMA} with \textbf{Collision Detection}.
+                \item Collision can be detected within a short period of time.
+                \item Colliding transmissions are aborted, and rescheduled, reducing channel waste.
+                \item Collision detection is easy in wired links, but difficult in wireless links.
+                \item \textbf{CSMA/CD} is more efficient than \textbf{ALOHA}.
+            \end{itemize}
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{MAC Taking Turns Protocols}
+    \begin{itemize}
+        \item \textbf{Taking turns} uses \textbf{polling}, a \textbf{master} invites \textbf{other nodes to transmit in turn}.
+        \item Concerns with this type of protocol are: polling overhead, latency, and a single point of failiure (master).
+        \item Another way to implement taking turns is with \textbf{token passing}. A \textbf{control token} is \textbf{passed sequentially} from \textbf{one node to the next}.
+        \item Concerns with token passing are: token overhead, latency, single point of failiure (token).
+    \end{itemize}
+
+    \section*{\centering{Local Area Networks (LANs)}}
+
+    \subsection*{MAC Addresses}
+    \begin{itemize}
+        \item 
+    \end{itemize}
+
+\end{document}
