@@ -3,7 +3,7 @@
 \usepackage{longtable}
 \usepackage[top=1in, bottom=0.25in, left=1.25in, right=1.25in,includefoot,heightrounded]{geometry}
 \usepackage{indentfirst}
-\usepackage[utf8]{inputenc}
+\usepackage[utf8x]{inputenc}
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx,tikz}
 \usepackage{hyperref}
@@ -54,7 +54,7 @@
         \end{enumerate}
     \end{itemize}
 
-    \section*{Routing Protocols}
+    \section*{\centering{Routing Protocols}}
     
     \subsection*{Routing Protocols}
     \begin{itemize}
@@ -84,11 +84,39 @@
             \begin{itemize}
                 \item An example of link state algorithms is Dijkstra's link-state routing algorithm.
             \end{itemize}
-            \item \textbf{Distance Vector Algorithms (decentralized)} | Distance vector algorithms are used routers initially \textbf{only know the link cost to attached neighbors}. This algorithm is \textbf{iterative}, and information needs to be \textbf{exchanged with neighboring routers}.
-            \begin{itemize}
-                \item An example of a distance vector algorithm is 
-            \end{itemize}
+            \item \textbf{Distance Vector Algorithms (Decentralized)} | Distance vector algorithms are used routers initially \textbf{only know the link cost to attached neighbors}. This algorithm is \textbf{iterative}, and information needs to be \textbf{exchanged with neighboring routers}.
         \end{enumerate}
+    \end{itemize}
+
+    \subsection*{Dijkstra's Link-State Routing Algorithm}
+    \begin{itemize}
+        \item Notations:
+        \begin{enumerate}
+            \item $C_{x,y}$ | The direct link cost from node $x$ to node $y$. If $x$ and $y$ are not directly connected, $C_{x,y}=\infty$.
+            \item $D(v)$ | The current least-cost-path cost estimate from source to destination $v$.
+            \item $p(v)$ | Predecessor node along path from source to $v$.
+            \item $N'$ | The set of nodes whose least-cost-path is definitively known.
+        \end{enumerate}
+        \item The algorithm:
+        \begin{verbatim}
+    begin
+        N' = {u}
+        for all nodes v
+            if v is adjacent to u
+                D(v) = Cu,v
+            else
+                D(v) = ∞
+        
+        Loop
+            find w net in N' such that D(w) is minimum
+            add w to N'
+            update D(v) for all v adjacent to w and not in N'
+            D(v) = min( D(v), D(w) + Cw,v )
+        Until all nodes are in N'
+    end
+        \end{verbatim}
+        \item The complexity of this algorithm is $\text{O}(n^2)$.
+        \item There are more efficient implementations that are $\text{O}(n\log{n})$.
     \end{itemize}
 
 \end{document}
