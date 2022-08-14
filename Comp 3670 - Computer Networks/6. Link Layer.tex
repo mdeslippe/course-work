@@ -179,7 +179,123 @@
 
     \subsection*{MAC Addresses}
     \begin{itemize}
-        \item 
+        \item A \textbf{MAC Address} is a \textbf{48-bit number} that \textbf{uniquely identifies} a \textbf{Network Interface Controller (NIC)}.
+        \item \textbf{MAC Address allocation} is adiministered by \textbf{IEEE}. \textbf{Manufacturers} buy \textbf{MAC Address ranges} and assign those to devices they make (this is done to ensure uniqueness).
+        \item \textbf{MAC Addresses} are used on \textbf{layer 2}.
+    \end{itemize}
+
+    \subsection*{The Address Resolution Protocol (ARP)}
+    \begin{itemize}
+        \item The \textbf{Address Resolution Protocol (ARP)} is a \textbf{communication protocol} that is used for \textbf{discovering} the \textbf{link-layer address of devices}.
+        \item \textbf{ARP} is a \textbf{request-response protocol}, where messages are directly encapsulated by a link layer protocol. Such messages are \textbf{only communicated within the boundaries of a single network}, they are never routed across internetworking nodes.
+        \item \textbf{Each IP node} on a \textbf{local area network} has an \textbf{ARP table}. These tables are used to maintain a \textbf{mapping} between each \textbf{MAC address} and it's corresponding \textbf{IP addresses}.
+        \item \textbf{ARP table entries} consist of: \textbf{a MAC address, IP Addresses, and a TTL}.
+        \item To find the \textbf{MAC Address of a node}, the following must be done:
+        \begin{enumerate}
+            \item The request node \textbf{broadcasts an ARP query} containing the \textbf{target node's IP addres}. The \textbf{target MAC Address field} in the request is set to \textbf{FF:FF:FF:FF:FF:FF} (which broadcasts it to all devices in the local network).
+            \item \textbf{All nodes} receive the \textbf{ARP query}, and check if the target IP matches their IP Address.
+            \item The \textbf{node} whose \textbf{IP Address matches} will send an \textbf{ARP response} giving it's \textbf{MAC Address}. All other nodes will ignore the \textbf{ARP request}.
+            \item The \textbf{requesting node} will \textbf{recieve the ARP response}, and put it into it's \textbf{ARP table}.
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{ARP | Routing to Another Network}
+    \begin{itemize}
+        \item If a \textbf{node A} wants to send a \textbf{datagram} to another \textbf{node B}, through a \textbf{router R}, the following must happen:
+        \begin{enumerate}
+            \item \textbf{Node A} creates an \textbf{IP datagram} with \textbf{IP source A, and IP destination B}.
+            \item \textbf{Node A} creates a \textbf{link-layer frame} containing an \textbf{A-to-B IP datagram}, with \textbf{R's MAC Address} in the \textbf{frame's destination}.
+            \item The \textbf{frame} is \textbf{sent from A to R}.
+            \item The \textbf{frame} is \textbf{received at R}, and the \textbf{datagram is removed}, and passed up to the \textbf{IP}.
+            \item \textbf{R} will change the \textbf{source MAC Address} to be \textbf{it's own address}, and the \textbf{destination MAC Address} to \textbf{B's MAC Address}.
+            \item \textbf{R} creates a \textbf{link-layer frame} containing the \textbf{datagram}.
+            \item \textbf{R} will \textbf{send} the new \textbf{frame}.
+            \item \textbf{B} will \textbf{receive} the \textbf{frame}, and extract the \textbf{datagram}.
+            \item \textbf{B} will pass the \textbf{datagram} up the protocol stack to the \textbf{IP}.
+        \end{enumerate}
+        \item[] \includegraphics[width=\textwidth - 25pt]{images/MAC-Routing-Example.png}
+        \item Every time a packet passes through a router, the source and destination MAC Addresses change.
+    \end{itemize}
+
+    \subsection*{Ethernet}
+    \begin{itemize}
+        \item \textbf{Ethernet} is the first \textbf{widely used Local Area Network (LAN) technology}.
+        \item \textbf{Ethernet} is simple, cheap, and has a fast data transfer rate.
+        \item Another bennified to \textbf{ethernet} is that \textbf{a single chip can support multiple transfer speeds}.
+        \item Ways to implement ethernet connections:
+        \begin{enumerate}
+            \item \textbf{Bus} | A bus allows \textbf{several devices} to \textbf{communiate} with each other over a \textbf{single coaxial cable}. Such a implementation is susceptible to collision.
+            \item \textbf{Switches} | A switch is a \textbf{physical device} that allows \textbf{several devices} to \textbf{connect to it over a physical link}. It then performs \textbf{switching}, which is essentially \textbf{forwarding frames} from one \textbf{node} to \textbf{another}. Such an implementation is not susceptible to collision.
+        \end{enumerate}
+        \item[] \includegraphics[width=\textwidth - 25pt]{images/Ethernet-Connections.png}
+        \item \textbf{Using switches} is a modern way of \textbf{connecting devices on a LAN}.
+        \item \textbf{Ethernet frames} consist of \textbf{six parts}:
+        \begin{enumerate}
+            \item \textbf{Preamble} | Preamble is used to synchronize sender and receiver clock rates. This consists of \textbf{7-bytes} of \textbf{10101010}, followed by one byte of \textbf{10101011}.
+            \item \textbf{Destination Address} | The 6-byte destination MAC Address.
+            \item \textbf{Source Address} | The 6-byte source MAC Address.
+            \item \textbf{Type} | The type indicates the higher-level protocol (for example IP). This is also used to demultiplex at the receiver.
+            \item \textbf{Payload} | The datagram.
+            \item \textbf{CRC} | A cyclic redundancy check at the receiver. If an error is detected, the frame is dropped.
+        \end{enumerate}
+        \item \textbf{Ethernet proerties}:
+        \begin{enumerate}
+            \item \textbf{Connectionless} | No handshaking is performed between the sending and receiving NICs.
+            \item \textbf{Unreliable} | The receiving NIC does not send ACKs or NAKs to the sending NIC. Dropped frames are only recovered if the inital sender uses a higher layer RDT (eg TCP).
+            \item \textbf{MAC Protocol} | Ethernet's MAC protocol is the unslotted CSMA/CD with binary backoff.
+        \end{enumerate}
+        \item There are \textbf{many ethernet standards}, they all have the same \textbf{MAC protocol, and frame format}. However, they can \textbf{transmit data at different rates}.
+    \end{itemize}
+
+    \subsection*{Ethernet Switches}
+    \begin{itemize}
+        \item An \textbf{ethernet switch} is a \textbf{link-layer device} that takes an \textbf{active role}.
+        \item \textbf{Ethernet switches} \textbf{store and forward ethernet frames}.
+        \item \textbf{Ethernet switches} also examing the \textbf{MAC addresses} of \textbf{incoming frames}, and \textbf{selectively forward} the \textbf{frame} to \textbf{on or more outgoing links} via \textbf{CSMA/CD}.
+        \item \textbf{Ethernet switches} are \textbf{transparent}; \textbf{nodes} are \textbf{unaware} of the \textbf{presence of switches}.
+        \item \textbf{Ethernet switches} are \textbf{plug-and-play} and \textbf{self-learning}. They \textbf{do not} need to be \textbf{configured}.
+        \item \textbf{Nodes} have a \textbf{direct, dedicated connection to switches}. This avoids collisions.
+        \item \textbf{Ethernet switches} are \textbf{full duplex} with \textbf{buffering} used on the \textbf{incoming data} to \textbf{switches}.
+        \item \textbf{Each ethernet switch} has a \textbf{switch table} that stores the \textbf{MAC address, interface number, and timestamp} or \textbf{each node} that is \textbf{connected to it}.
+        \item As the \textbf{ethernet switch} is \textbf{self-learning} it can \textbf{learn} which \textbf{nodes} can be \textbf{reached}, and what \textbf{interfaces they can be reached through}. As it \textbf{learns this information}, it \textbf{stores it in the switch table}.
+        \begin{itemize}
+            \item There are two ways a switch can learn the MAC address of connected devices:
+            \begin{enumerate}
+                \item When a \textbf{frame} is sent to the \textbf{switch}, it contains a \textbf{source MAC address}, the switch "learns" that address, and adds it to the switch table.
+                \item When a \textbf{frame} is sent to the \textbf{switch}, and has a \textbf{unmapped destination address}, it will \textbf{flood all interfaces} (except the sending interface), with the \textbf{frame} until one \textbf{responds}. Once a \textbf{node responds}, the \textbf{switch} will know that the \textbf{MAC address blongs to that node}.
+            \end{enumerate}
+        \end{itemize}
+    \end{itemize}
+
+    \subsection*{Switches vs Routers}
+    \begin{itemize}
+        \item \textbf{Routers} are \textbf{network-layer devices}.
+        \item \textbf{Switches} are \textbf{link-layer devices}.
+        \item \textbf{Routers} and \textbf{switches} both \textbf{store-and-forward} units of data.
+    \end{itemize}
+
+    \section*{\centering{Virtual Local Area Networks (VLANs)}}
+
+    \subsection*{VLAN Motivation}
+    \begin{itemize}
+        \item If a \textbf{Local Area Network (LAN) scales} to a \textbf{very large size}, then all \textbf{layer-2 broadcast traffic} (ARP, DHCP, unknown MAC, etc) must cross the \textbf{entire LAN}.
+        \item \textbf{Broadcast traffic} on a \textbf{large scale} can lead to \textbf{low efficiency} and \textbf{security / privacy issues}. 
+        \item To overcome this issue, we can create \textbf{Virtual Local Area Networks (VLANs)}.
+    \end{itemize}
+
+    \subsection*{Port-Based VLANs}
+    \begin{itemize}
+        \item \textbf{Port-based Virtual Local Area Networks (VLANs)} can be configured so specific \textbf{port ranges} are part of specific \textbf{VLANs}. Effectively allowing a \textbf{single physical switch} to operate as \textbf{several virtual switches}.
+        \item[] \includegraphics[width=\textwidth - 25pt]{images/VLAN.png}
+        \item \textbf{Traffic isolation} refers to the \textbf{isolation of traffic within virtual networks}. The traffic within a virtual network cannot leave that network on layer 2.
+        \item \textbf{Dynamic membership} refers to the \textbf{dynamic assigning of ports} among \textbf{VLANs}.
+        \item \textbf{Forwarding between VLANs} can be done \textbf{via routing} through a \textbf{router}. In practice, vendors sell switches with build-in routers for this reason.
+        \item \textbf{VLANs} that \textbf{span multiple switches} use \textbf{trunk ports} that \textbf{carry frames} between \textbf{VLANs} defined over \textbf{multiple physical switches}.
+        \item[] \includegraphics[width=\textwidth - 25pt]{images/Multi-VLANs.png} 
+        \item A \textbf{problem} with \textbf{Port-Based VLANs} is that a \textbf{malicious actor} can \textbf{obtain access} to a \textbf{virtual network} simply by \textbf{connecting their device} to \textbf{one of the ports on the virtual network}.
+        \begin{itemize}
+            \item To get around this issue, \textbf{VLANs} can be defined by \textbf{device MAC addresses}. You simply \textbf{list all of the MAC addresses} that are a part of the \textbf{VLAN}.
+        \end{itemize}
     \end{itemize}
 
 \end{document}
