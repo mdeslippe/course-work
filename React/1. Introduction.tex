@@ -225,4 +225,280 @@
         \item When \textbf{dynamically rendering a list} you \textbf{MUST ALWAYS} give \textbf{each element in the list a ``key'' property that is unique} (the index of each element in the list is not a good key, it should be some type of unique immutable id).
     \end{itemize}
 
+    \section*{\centering{Using State and Side Effects in React}}
+
+    \subsection*{Using State in React}
+    \begin{itemize}
+        \item To \textbf{use state} in a \textbf{functional component}, you can use the \textbf{useState React hook}.
+        \item The following example demonstrates how to use state:
+        \begin{lstlisting}[language=Java]
+    
+    import {useState} from 'react';
+
+    function MyComponent () {
+
+        // useState accepts an inital state value as an argument, 
+        // and returns an array containing the current state, and a 
+        // function to update the state.
+        //
+        // The function to set the state will receive the previous
+        // state as the first parameter, this can be used to update
+        // the state if necessary.
+        const [state, setState] = useState(initialStateValue);
+
+        // ...
+    }
+        \end{lstlisting}
+    \end{itemize}
+
+    \subsection*{Side Effects in React}
+    \begin{itemize}
+        \item When performing \textbf{actions that have side effects} (or actions that are not involved in the rendering process) in \textbf{functional components}, the \textbf{useEffect hook should be used}.
+        \item The following example demonstrates how to use an effect:
+        \begin{lstlisting}[language=Java]
+    
+    import {useEffect} from 'react';
+
+    function MyComponent() {
+
+        // The code that performs the action with side effects or the
+        // action that is not involved in the rendering process is the
+        // first arugment provided in useEffect (a function must be passed).
+        // The second argument is a dependency array, anytime the dependency
+        // array values are modified, the useEffect hook will execute the
+        // function again.
+        //
+        // If the dependency array provided is empty, the effect will only 
+        // be called once.
+        useEffect(() => {
+            // Perform side effects here.
+        }, dependencyArray);
+
+        // ...
+    }
+        \end{lstlisting}
+    \end{itemize}
+
+    \subsection*{React Reducer Hook}
+    \begin{itemize}
+        \item Similar to the \textbf{useState hook} the \textbf{useReducer hook} allows us to create state, but provides the ability to automatically update the state with a \textbf{predetermined function}.
+        \item The following example demonstrates how to use a reducer:
+        \begin{lstlisting}[language=Java]
+            
+    import {useReducer} from 'react';
+
+    function MyComponent() {
+
+        // The reducer returns an array containing the current state, and
+        // a function to update the state based on the predetermined function.
+        // The first argument in useReducer is the function to update the state,
+        // the second argument is the inital state.
+        const [count, updateCount] = useReducer((count => count + 1), 0);
+
+        // We can then do the following:
+        updateCount();
+
+        // ...
+    }
+        \end{lstlisting}
+    \end{itemize}
+
+    \section*{\centering{Handling Forms in React}}
+
+    \subsection*{Uncontrolled and Controlled Components}
+    \begin{itemize}
+        \item An \textbf{uncontrolled component} is a \textbf{component} that \textbf{renders form elements} such that the \textbf{element's data} is \textbf{managed by the DOM} (the default DOM behavior).
+        \item A \textbf{controlled component} is a \textbf{component} that \textbf{renders form elements} such that the \textbf{elements data} is stored in the \textbf{form component's state}.
+        \item The following is an example of a \textbf{controlled component}:
+        \begin{lstlisting}[language=Java]
+            
+    import {useState} from 'react';
+
+    function MyComponent() {
+
+        const [currentValue, setValue] = useState("");
+
+        return (
+            <input 
+                type="text"
+                value={currentValue}
+                onChange={event => setValue(event.target.value)}
+            />
+        )
+
+    }
+        \end{lstlisting}
+    \end{itemize}
+
+    \subsection*{Form Libraries}
+    \begin{itemize}
+        \item There are many \textbf{existing form libraries} that exist to make \textbf{form development easier}. You can consider using them.
+        \item Some libraries can be found at: 
+        \begin{enumerate}
+            \item \url{https://formik.org/}
+            \item \url{https://react-hook-form.com/}
+            \item \url{https://usehooks.com/}
+        \end{enumerate}
+    \end{itemize}
+
+    \section*{\centering{Custom Hooks in React}}
+
+    \subsection*{Custom Hooks in React}
+    \begin{itemize}
+        \item A \textbf{custom hook} is a \textbf{function} (that starts with use in its identifier by convention).
+        \item You can then define the hook inside the function.
+        \item Inside the custom hook, you are able to use other hooks.
+    \end{itemize}
+
+    \section*{\centering{React Router}}
+
+    \subsection*{Introduction to React Router}
+    \begin{itemize}
+        \item \textbf{React Router} is a \textbf{standard library for routing in React}. It enables the navigation among views of various components in \textbf{React applications}.
+        \item To install the \textbf{React Router} you run the following command:
+        \begin{lstlisting}[language=bash]
+
+    npm install react-router-dom
+        \end{lstlisting}
+    \end{itemize}
+
+    \subsection*{Configuring the React Router}
+    \begin{itemize}
+        \item The following is an example of how to configure the router:
+        \begin{lstlisting}[language=Java]
+    
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+    import {BrowserRouter, Routes, Route} from 'react-router-dom';
+    import {Page1, Page2, Page3} from './Pages';
+
+    ReactDom.render(
+        <BrowserRouter>
+            <Routes>
+                <Route path="/page1" element={<Page1 />}/>
+                <Route path="/page2" element={<Page2 />}/>
+                <Route path="/page3" element={<Page3 />}/>
+            </Routes>
+        </BrowserRouter>,
+        document.getElementById('root')
+    );
+        \end{lstlisting}
+        \item Note that the routes do not need to be at the top of the component tree, they can appear anywhere.
+    \end{itemize}
+
+    \subsection*{Linking React Router Pages}
+    \begin{itemize}
+        \item To \textbf{link pages together} you can use the \textbf{Link} component.
+        \item The following is an example of how to use the Link component:
+        \begin{lstlisting}[language=Java]
+
+            import {Link} from 'react-router-dom';
+
+            // ...
+
+            <Link to="path">Name</Link>
+        \end{lstlisting}
+    \end{itemize}
+
+    \section*{\centering{React Testing and Deployment}}
+
+    \subsection*{Testing Small Functions with Jest}
+    \begin{itemize}
+        \item When you \textbf{install React} with \textbf{create-react-app}, a \textbf{test script is created} (this script uses the testing library Jest). This script will \textbf{run the test cases you create}.
+        \item To \textbf{create a test file}, you make a file in the application with \textbf{the file extension ``.test.js''}.
+        \item The \textbf{naming convention} for testing files is to \textbf{give the file the same name as the one you are testing}, the only difference is the \textbf{file extension}.
+        \item The following example demonstrates how to create test cases inside of the test files:
+        \begin{lstlisting}[language=Java]
+            
+    test("Descriptive Case Name", () => {
+        // Create test environment.
+        
+        // You can use expect() to perform assertions, if the assertions 
+        // are true, the test passes, if false the test fails.
+        // There is no limit to the amount of assertions you can have.
+        //
+        // The toBe function that is returned by the expect function is
+        // one of many jest matchers that can be used for assertions.
+        expect(thingThatIsBeingTest(args...)).toBe(result);
+    })
+        \end{lstlisting}
+    \end{itemize}
+
+    \subsection*{The React Testing Library}
+    \begin{itemize}
+        \item When you \textbf{install React} with \textbf{create-react-app}, the \textbf{React Testing Library} is also installed.
+        \item When writing \textbf{tests} that \textbf{involve rendering components}, you can use the \textbf{React testing library} to verify they were \textbf{rendered correctly}.
+        \item The following example demonstrates how to test the rendering of a component:
+        \begin{lstlisting}[language=Java]
+            
+    import {render} from '@testing-library/react'
+    import MyComponent from './MyComponent';
+
+    test("render h1", () => {
+        // Creates a react testing library query.
+        const {getByText} = render(<MyComponent />);
+        const h1 = getByText(/my text/);
+
+        // You can then perform normal jest assertions.
+        expect(h1).toHaveTextContent("my text");
+    })
+        \end{lstlisting}
+    \end{itemize}
+
+    \subsection*{Testing Events}
+    \begin{itemize}
+        \item You can also \textbf{test events} with the \textbf{React Testing Library}.
+        \item The following example demonstrates how to test an even:
+        \item[] The component (Checkbox.js):
+        \begin{lstlisting}[language=Java]
+    
+    import {useReducer}
+    
+    export function Checkbox() {
+        const [checked, setChecked] = useReducer((checked => !checked), false);
+
+        return (
+            <>
+                <label htmlFor="myCheckBox">
+                    {checked ? "checked" : "not checked"}
+                </label>
+                <input
+                    id="myCheckBox"
+                    type="checkbox"
+                    value={checked}
+                    onChange={setChecked}
+                >
+            </>
+        )
+    }
+        \end{lstlisting}
+        \item[] The test (Checkbox.test.js):
+        \begin{lstlisting}[language=Java]
+    
+    import {render, fireEvent} from '@testing-library/react';
+    import {Checkbox} from './Checkbox';
+
+    test("Checkbox component check change event", () => {
+        const {getByLabelText} = render(<Checkbox />);
+        const checkbox = getByLabelText(/not checked/i);
+
+        // Fire a click event.
+        fireEvent.click(checkbox);
+
+        // Assertion
+        expect(checkbox.checked).toEqual(true);
+    });
+        \end{lstlisting}
+    \end{itemize}
+
+    \subsection*{Building React Projects for Production}
+    \begin{itemize}
+        \item To \textbf{build the project} for \textbf{production}, you can use the \textbf{build script}:
+        \begin{lstlisting}[language=Bash]
+            
+    npm run build
+        \end{lstlisting}
+        \item This build can then be deployed to a server.
+    \end{itemize}
+
 \end{document}
