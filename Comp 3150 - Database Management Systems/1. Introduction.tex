@@ -39,4 +39,64 @@
 
     \section*{\centering{Introduction}}
 
+    \subsection*{Basic Definitions}
+    \begin{itemize}
+        \item The term \textbf{data} refers to an \textbf{individual unit of information}.
+        \item The term \textbf{record} refers to a \textbf{grouping of data}.
+        \item The term \textbf{database} refers to an \textbf{organized collection of records}.
+        \item \textbf{Databases} are \textbf{managed} by \textbf{software systems} known as \textbf{Database Management Systems (DBMS)}.
+        \begin{itemize}
+            \item These systems allow \textbf{users} to \textbf{manage the database along with the data stored within the database}.
+        \end{itemize}
+    \end{itemize}
+
+    \subsection*{Typical DBMS Functionality}
+    \begin{itemize}
+        \item \textbf{Database Management Systems} provide a \textbf{data model} that is used to \textbf{define the layout of databases}.
+        \begin{itemize}
+            \item \textbf{Data models} are composed of \textbf{data types, structures, and constraints}.
+            \item There are a large amount of data models, some of the more popular ones include: the relational model, the document model, and the network model.
+        \end{itemize}
+        \item \textbf{Database Management Systems} provide a \textbf{Data Definition Language (DDL)}, which is a \textbf{domain-specific language} that allows \textbf{users} to \textbf{create, read, update, and delete} the \textbf{structure (schema)} of a \textbf{database}.
+        \item \textbf{Database Management Systems} provide a \textbf{Data Manipulation Language (DML)}, which is a \textbf{domain-specific language} that allows \textbf{users} to \textbf{create, read, update, and delete} the \textbf{records} stored within the \textbf{databases}.
+        \item The \textbf{DDL and DML} are sometimes \textbf{combined} into a \textbf{single-language}.
+        \item \textbf{Database Management Systems} allow \textbf{concurrent processing} and \textbf{sharing of data} to \textbf{external users and external applications}.
+        \begin{itemize}
+            \item This is done with the use of \textbf{Integrity Constraints (IC)} and \textbf{transactions} to ensure the \textbf{data} is always \textbf{valid and consistent}.
+        \end{itemize}
+        \item \textbf{Databases Management Systems} provide \textbf{security tools} that \textbf{prevent unauthorized access} to the \textbf{data} stored within the \textbf{databases}.
+        \item \textbf{Database Management Systems} provide \textbf{maintenance tools} that help administrators \textbf{maintain databases} over the \textbf{lifetime} of \textbf{applications}.
+    \end{itemize}
+
+    \subsection*{Characteristics of Databases}
+    \begin{itemize}
+        \item \textbf{Databases} are naturally \textbf{self-describing}. The \textbf{Database Management System} stores a \textbf{catalog of meta-data} that describes \textbf{databases} (types, constraints, etc).
+        \item \textbf{Databases} provide a \textbf{layer of insulation} between \textbf{external applications} that \textbf{access the same datasets}.
+        \begin{itemize}
+            \item This is know as \textbf{program-data independence}; it is made possible by the \textbf{three-level architecture design} that databases use.
+        \end{itemize}
+        \item The \textbf{physical storage} of \textbf{data} is \textbf{abstracted} from \textbf{users and applications}; they only know about the \textbf{external view} of the \textbf{database}.
+        \item \textbf{Users and programs} refer to the \textbf{data model constructs} rather than the \textbf{internal storage details}.
+        \item The \textbf{Database Management System} supports \textbf{multiple-views} of \textbf{databases} that are based on a \textbf{per-user / per-application permission system}.
+        \item When \textbf{users and applications} are interacting with the \textbf{Database Management System}, they do so without having to be \textbf{concerned with interfering with each other}, the \textbf{DBMS automatically handles this}.
+    \end{itemize}
+    
+    \subsection*{Database Advantages Over the File System}
+    \begin{itemize}
+        \item \textbf{Databases store all data in a single place}, so there is \textbf{no need for redundant copies} of the \textbf{dataset}.
+        \item \textbf{Databases} support \textbf{complex, fine-grained, access-controls}.
+        \item \textbf{Databases} support \textbf{non-primitive storage types}.
+        \item \textbf{Databases} automatically \textbf{optimize queries for you}.
+        \item \textbf{Databases} support \textbf{Integrity Constraints}.
+    \end{itemize}
+    
+    \subsection*{Types of Users}
+    \begin{itemize}
+        \item Database Administrators (DBA).
+        \item Database Designers.
+        \item End-Users.
+        \item Programmers.
+        \item Developers of the DBMS.
+    \end{itemize}
+
 \end{document}
