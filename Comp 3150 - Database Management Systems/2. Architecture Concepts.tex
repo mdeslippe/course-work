@@ -39,4 +39,53 @@
 
     \section*{\centering{Architecture Concepts}}
 
+    \subsection*{Data Models}
+    \begin{itemize}
+        \item \textbf{Data Models} are used to define the \textbf{structure, operations, and integrity constraints} that are \textbf{supported}.
+        \begin{itemize}
+            \item There are a large amount of data models, some of the more popular ones include: the relational model, the document model, and the network model.
+        \end{itemize}
+        \item The \textbf{data model} that should be used to \textbf{solve a problem} is determined by the \textbf{specific requirements of the problem}.
+        \item There are \textbf{four categories} of \textbf{data models}:
+        \begin{enumerate}
+            \item \textbf{Conceptual, high-level, data models} | These \textbf{describe data} in concepts that are \textbf{close to the way} that \textbf{external users perceive the data}.
+            \item \textbf{Physical, low-level, data models} | These \textbf{describe data} in concepts that \textbf{detail how the data is physically stored}.
+            \item \textbf{Implementation, representation, data models} | These \textbf{describe data} in concepts that are a \textbf{hybrid of (1) and (2)}. There is some information regarding the way the data is stored, but overall it is still very high-level.
+            \item \textbf{Self-Describing data models} | These \textbf{describe how data is being stored, near the actual data that is being stored}.
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{Schemas vs Instances}
+    \begin{itemize}
+        \item A \textbf{schema} is a \textbf{description of the data that is being stored} (typically referring to the entire database).
+        \item A \textbf{schema construct} is a \textbf{sub-component} of the \textbf{schema} (for example a table).
+        \item An \textbf{instance} is a \textbf{record that is actually being stored}.
+        \item The \textbf{state of a database} refers to \textbf{all of the records stored} within the \textbf{database} at a \textbf{particular moment in time}.
+        \item The act of \textbf{saving the database state} is called \textbf{creating a snapshot of the database}.
+        \item The \textbf{database state} is said to be \textbf{valid} when all of the \textbf{data} that is \textbf{stored within the database} satisfies the \textbf{structure and constraints of the schema}.
+        \item The \textbf{schema of a database} can also be referred to as \textbf{"intension"}.
+        \item The \textbf{state of a database} can also be referred to as \textbf{"extension"}.
+    \end{itemize}
+
+    \subsection*{Three-Level Architecture}
+    \begin{itemize}
+        \item \textbf{Database Management Systems} use a \textbf{three-level architecture} to achieve: \textbf{data-program separation, data-independence, and multi-view support}.
+        \item The three levels are defined as follows:
+        \begin{enumerate}
+            \item The \textbf{first schema} is an \textbf{external schema} that is used for \textbf{user views}.
+            \item The \textbf{second schema} is a \textbf{conceptual schema} that models the \textbf{entire database} with a \textbf{data model}.
+            \item The \textbf{third schema} is an \textbf{internal schema} that models the \textbf{physical data storage}.
+        \end{enumerate}
+    \end{itemize}
+
+    \subsection*{Data Independence}
+    \begin{itemize}
+        \item The term \textbf{data independence} refers to the ability to change a \textbf{lower-level schema without having to modify any higher-level schemas}.
+        \item There are \textbf{two types of data independence}:
+        \begin{enumerate}
+            \item \textbf{Logical Data Independence} is the ability to change the \textbf{conceptual schema} without having to change the \textbf{external schema}.
+            \item \textbf{Physical Data Independence} is the ability to change the \textbf{internal schema} without having to change the \textbf{conceptual schema}.
+        \end{enumerate}
+    \end{itemize}
+
 \end{document}
